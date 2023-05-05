@@ -1,0 +1,9 @@
+pages:
+
+Main
+Auction
+AuctionDetail - Auction Delete, Auction Update(Edit), Auction up 
+AuctionAdd
+Login
+SignUp
+MyPage
