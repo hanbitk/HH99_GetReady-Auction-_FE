@@ -10,9 +10,9 @@ export const GlobalStyles = createGlobalStyle`
         --color-light-gray: #dddddd;
 
         /* Font size */
-        --font-extra-large: 100px;
+        --font-extra-large: 50px;
         --font-large: 32px;
-        --font-medium: 20px;
+        --font-medium: 25px;
         --font-regular: 16px;
         --font-small: 14px;
         --font-micro: 12px;
