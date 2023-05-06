@@ -77,7 +77,7 @@ export const GlobalStyles = createGlobalStyle`
 `;
 
 export const linkStyle = {
-  textDecoration: "none",
-  color: "black",
-  cursor: "pointer",
+    textDecoration: "none",
+    color: "black",
+    cursor: "pointer",
 };
