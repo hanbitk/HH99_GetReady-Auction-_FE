@@ -1,4 +1,6 @@
 import { createGlobalStyle } from "styled-components";
+import { Link } from "react-router-dom";
+import styled from "styled-components";
 
 export const GlobalStyles = createGlobalStyle`
     :root{
@@ -12,7 +14,7 @@ export const GlobalStyles = createGlobalStyle`
         /* Font size */
         --font-extra-large: 50px;
         --font-large: 32px;
-        --font-medium: 25px;
+        --font-medium: 20px;
         --font-regular: 16px;
         --font-small: 14px;
         --font-micro: 12px;
@@ -76,8 +78,18 @@ export const GlobalStyles = createGlobalStyle`
     
 `;
 
-export const linkStyle = {
-    textDecoration: "none",
-    color: "black",
-    cursor: "pointer",
-};
+export const LogoLink = styled(Link)`
+  text-decoration: none;
+  color: var(--color-black);
+  cursor: pointer;
+  font-size: ${(props) => props.fontSize};
+  font-weight: var(--weight-semi-bold);
+`;
+
+export const NavBarLink = styled(Link)`
+  text-decoration: none;
+  color: var(--color-black);
+  cursor: pointer;
+  font-size: ${(props) => props.fontSize};
+  font-weight: ${(props) => props.fontWeight};
+`

@@ -6,6 +6,8 @@ export const StButton = styled.button`
   font-size: ${(props) => props.fontSize};
   border-radius: 4px;
   padding: ${(props) => props.padding};
+  font-weight: var(--weight-semi-bold);
+  height: ${(props) => props.height};
 
   &:hover {
     transform: translateY(2px);
