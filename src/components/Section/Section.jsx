@@ -1,9 +1,11 @@
 import React from 'react'
-import { StSection } from '../../styles/Section.styles'
+import { StSectionContainer, StSection } from '../../styles/Section.styles'
 
-function Section({children}) {
+function Section({children, backgroundColor}) {
   return (
-    <StSection>{children}</StSection>
+    <StSectionContainer backgroundColor={backgroundColor}>
+        <StSection>{children}</StSection>
+    </StSectionContainer>
   )
 }
 

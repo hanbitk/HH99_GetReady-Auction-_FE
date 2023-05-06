@@ -1,7 +1,7 @@
 import React from "react";
 import { StButton } from "../../styles/Buttons.styles";
 
-function Button({ children, size, fontSize, padding, height, onClick }) {
+function Button({ children, size, fontSize, padding, height, onClick, backgroundColor }) {
   return (
     <StButton
       size={size}
@@ -9,6 +9,7 @@ function Button({ children, size, fontSize, padding, height, onClick }) {
       padding={padding}
       height={height}
       onClick={onClick}
+      backgroundColor={backgroundColor}
     >
       {children}
     </StButton>

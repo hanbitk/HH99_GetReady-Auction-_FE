@@ -10,8 +10,12 @@ export const StNavBar = styled.nav`
     gap: 22px;
     align-items: center;
 
+    li {
+      color: var(--color-primary);
+    }
+
     li:hover {
-      color: red;
+      color: var(--color-blue);
     }
   }
 `;

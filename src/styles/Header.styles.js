@@ -1,17 +1,19 @@
-import { Link } from "react-router-dom";
 import styled from "styled-components";
 
-export const StHeader = styled.header`
-  border: 1px solid red;
-  padding: 10px 30px;
-  width: 100%;
+export const StHeaderContainer = styled.header`
+  z-index: 999;
+  position: sticky;
+  top: 0;
+  background: var(--color-light-white);
+`;
+
+export const StHeader = styled.div`
+  padding: 20px;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  background: var(--color-light-gray);
-  position: sticky;
-  top: 0;
-  z-index: 1;
+  max-width: 1280px;
+  margin: 0 auto;
 `;
 
 export const StLogo = styled.div`

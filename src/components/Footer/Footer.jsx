@@ -7,7 +7,12 @@ function Footer() {
   return (
     <StFooter>
       <div>
-        <LogoLink to="/" fontSize="var(--font-small)">
+        <LogoLink
+          to="/"
+          fontSize="var(--font-small)"
+          fontWeight="var(--weight-bold)"
+          color="var(--color-blue)"
+        >
           Get Ready, Auction!
         </LogoLink>
       </div>
@@ -18,7 +23,9 @@ function Footer() {
         />
       </div>
       <div>
-        <StFooterCopyright>© GetReady,Auction!, 2023. We love our users!</StFooterCopyright>
+        <StFooterCopyright>
+          copyright© get ready, auction! all right reserved.
+        </StFooterCopyright>
       </div>
     </StFooter>
   );

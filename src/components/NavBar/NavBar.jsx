@@ -13,6 +13,10 @@ function NavBar({ fontSize, fontWeight }) {
         <NavBarLink to="/auction" fontSize={fontSize} fontWeight={fontWeight}>
           <li>경매품</li>
         </NavBarLink>
+
+        <NavBarLink to="/auction" fontSize={fontSize} fontWeight={fontWeight}>
+          <li>핫한 상품</li>
+        </NavBarLink>
       </ul>
     </StNavBar>
   );
