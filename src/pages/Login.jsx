@@ -4,7 +4,7 @@ import { useNavigate } from 'react-router-dom/dist'
 function Login() {
     const nav = useNavigate()
     const signupGo = () => {
-        nav("/user/Signup")
+        nav("/user/signup")
     }
     return (
         <>

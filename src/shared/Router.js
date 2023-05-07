@@ -8,23 +8,28 @@ import AuctionAdd from "../pages/AuctionAdd";
 import MyPage from "../pages/MyPage";
 import AuctionDetail from "../pages/AuctionDetail";
 import Layout from "../components/Layout/Layout";
+
 function Router() {
   return (
     <BrowserRouter>
-      <Layout>
-        <Routes>
+      <Routes>
+        <Route element={<Layout />}>
           <Route path="/" element={<Home />} />
-          <Route path="/user/Login" element={<Login />} />
-          <Route path="/user/Signup" element={<Signup />} />
-          <Route path="/Auction" element={<Auction />} />
-          <Route path="/AuctionAdd" element={<AuctionAdd />} />
-          <Route path="/MyPage" element={<MyPage />} />
-          <Route path="/AuctionDetail" element={<AuctionDetail />} />
+          <Route path="/auction" element={<Auction />} />
+          <Route path="/auction/add" element={<AuctionAdd />} />
+          <Route path="/mypage" element={<MyPage />} />
+          <Route path="/auction/:id" element={<AuctionDetail />} />
+        </Route>
 
-          {/* <Route path="/work" element={<Check />} /> */}
-          {/* <Route path="/work/:id" element={<Detail />} /> */}
-        </Routes>
-      </Layout>
+        <Route path="/user/*" element={<Login />} />
+        <Route path="/user/*" element={<Signup />} />
+        {/* <Route>
+          <Route path="/user">
+            <Route path="login" element={<Login />} />
+            <Route path="signup" element={<Signup />} />
+          </Route>
+        </Route> */}
+      </Routes>
     </BrowserRouter>
   );
 }
