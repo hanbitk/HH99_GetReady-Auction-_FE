@@ -1,0 +1,99 @@
+import styled from "styled-components";
+import { Link } from "react-router-dom";
+
+export const StSignUpContainer = styled.div`
+  max-width: 1200px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+`;
+export const StSignUpHeader = styled.header`
+  margin-bottom: 30px;
+  font-size: 40px;
+  color: var(--color-dark-blue);
+  font-weight: var(--weight-bold);
+`;
+
+export const StSignUpForm = styled.div`
+  border: 1px solid var(--color-gray);
+  padding: 30px;
+  height: 320px;
+  border-radius: 10px;
+  background-color: var(--color-light-white);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+`;
+
+export const StSignUpFormHeader = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+`;
+
+export const StSignUp = styled.div`
+  width: 450px;
+  border-radius: 4px;
+`;
+
+export const StSignUpInputs = styled.div`
+  display: flex;
+  flex-direction: column;
+`;
+
+export const StSignUpInput = styled.input`
+  border-radius: 4px;
+  width: 350px;
+  padding: 10px;
+  cursor: pointer;
+`;
+
+export const StInputBox = styled.div`
+  border: 1px solid var(--color-light-gray);
+  display: flex;
+  align-content: center;
+  padding: 10px;
+  border-radius: ${(props) => props.borderRadius};
+`;
+
+export const StLogIn = styled.div`
+  margin-block: 10px;
+  display: flex;
+  align-items: center;
+`;
+
+export const LogoLinkStyle = styled(Link)`
+  text-decoration: none;
+  color: var(--color-blue);
+  cursor: pointer;
+`;
+
+export const SignUpLinkStyle = styled(Link)`
+color: var(--color-blue);
+  font-size: var(--font-small);
+  padding: 10px;
+  cursor: pointer;
+
+  &:hover{
+    color: var(--color-dark-blue);
+    font-weight: var(--weight-semi-bold);
+  }
+`
+
+export const iconStyle = {
+  fontSize: "var(--font-medium)",
+  alignSelf: "center",
+  marginRight: "4px",
+  color: "var(--color-dark-blue)",
+};
+
+export const signUpIconStyle = {
+  fontSize: "var(--font-medium)",
+  alignSelf: "center",
+  marginRight: "10px",
+  color: "var(--color-blue)",
+};

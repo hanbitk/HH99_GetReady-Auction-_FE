@@ -21,8 +21,8 @@ function Router() {
           <Route path="/auction/:id" element={<AuctionDetail />} />
         </Route>
 
-        <Route path="/user/*" element={<Login />} />
-        <Route path="/user/*" element={<Signup />} />
+        <Route path="/user/login" element={<Login />} />
+        <Route path="/user/signup" element={<Signup />} />
         {/* <Route>
           <Route path="/user">
             <Route path="login" element={<Login />} />
