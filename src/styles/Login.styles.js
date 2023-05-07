@@ -21,7 +21,7 @@ export const StLogInHeader = styled.header`
   font-weight: var(--weight-bold);
 `;
 
-export const StLogInForm = styled.div`
+export const StLogInForm = styled.form`
   border: 1px solid var(--color-gray);
   padding: 30px;
   height: 320px;

@@ -17,7 +17,7 @@ export const StSignUpHeader = styled.header`
   font-weight: var(--weight-bold);
 `;
 
-export const StSignUpForm = styled.div`
+export const StSignUpForm = styled.form`
   border: 1px solid var(--color-gray);
   padding: 30px;
   height: 320px;

@@ -1,5 +1,4 @@
 import React from "react";
-import { useNavigate } from "react-router-dom/dist";
 import {
   StLogInContainer,
   LogoLinkStyle,
@@ -21,18 +20,42 @@ import Button from "../components/Buttons/Button";
 import { AiOutlineUser } from "react-icons/ai";
 import { RiLockPasswordLine } from "react-icons/ri";
 import { MdLogin } from "react-icons/md";
+import useInput from "../hooks/useInput";
+import { useMutation, useQueryClient } from "react-query";
+import { login, user } from "../api/users";
+import { useQuery } from "react-query";
+import { useEffect } from "react";
 
 function Login() {
-  const navigate = useNavigate();
+  const [username, onChangeUsernameHandler] = useInput();
+  const [password, onChangePasswordHandler] = useInput();
+
+
+  const queryClient = useQueryClient();
+  const mutation = useMutation(login, {
+    onSuccess: () =>{
+      console.log('로그인 완료')
+    }
+  })
+
+  const loginHandler = (e) => {
+    e.preventDefault()
+    mutation.mutate({
+      id: username,
+      password: password,
+    })
+  }
 
   return (
     <StContainer>
       <StLogInContainer>
+        {/* Header */}
         <LogoLinkStyle to="/">
           <StLogInHeader>Get Ready, Auction!</StLogInHeader>
         </LogoLinkStyle>
 
-        <StLogInForm>
+        {/* Input */}
+        <StLogInForm onSubmit={loginHandler}>
           <StLogInFormHeader>
             <div style={{ display: "flex", marginBottom: "20px" }}>
               <MdLogin style={logInIconStyle} />
@@ -44,11 +67,11 @@ function Login() {
               <StLogInInputs>
                 <StInputBox borderRadius="10px 10px 0 0">
                   <AiOutlineUser style={iconStyle} />
-                  <StLogInInput placeholder="Username" />
+                  <StLogInInput placeholder="Username" type="text" onChange={onChangeUsernameHandler} />
                 </StInputBox>
                 <StInputBox borderRadius="0 0 10px 10px">
                   <RiLockPasswordLine style={iconStyle} />
-                  <StLogInInput placeholder="Password" />
+                  <StLogInInput placeholder="Password" type="password" onChange={onChangePasswordHandler}/>
                 </StInputBox>
               </StLogInInputs>
             </StLogIn>
@@ -58,6 +81,7 @@ function Login() {
           </Button>
         </StLogInForm>
 
+        {/* Footer */}
         <StSignUp>
           <p
             style={{
@@ -71,7 +95,7 @@ function Login() {
         </StSignUp>
 
         <div>
-          <StFooterCopyright style={{fontWeight:"var(--weight-semi-bold)"}}>
+          <StFooterCopyright style={{ fontWeight: "var(--weight-semi-bold)" }}>
             copyright© get ready, auction! all right reserved.
           </StFooterCopyright>
         </div>
