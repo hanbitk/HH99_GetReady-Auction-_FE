@@ -7,6 +7,7 @@ import Auction from "../pages/Auction";
 import AuctionAdd from "../pages/AuctionAdd";
 import MyPage from "../pages/MyPage";
 import AuctionDetail from "../pages/AuctionDetail";
+import MyPageBidding from "../pages/MyPageBidding";
 import Layout from "../components/Layout/Layout";
 import PrivateRoute from "./PrivateRoute";
 import { useCookies } from "react-cookie";
@@ -18,19 +19,14 @@ function Router() {
         <Route element={<Layout />}>
           <Route path="/" element={<Home />} />
           <Route path="/auction" element={<Auction />} />
-          <Route path="/auction/add" element={<AuctionAdd />} />
-          <Route path="/mypage" element={<MyPage />} />
-          <Route path="/auction/:id" element={<AuctionDetail />} />
+          <Route path="/auctionAdd" element={<AuctionAdd />} />
+          <Route path="/myPage" element={<MyPage />} />
+          <Route path="/auction/detail" element={<AuctionDetail />} />
+          <Route path="/mypage/bidding" element={<MyPageBidding />} />
         </Route>
 
         <Route path="/user/login" element={<Login />} />
         <Route path="/user/signup" element={<Signup />} />
-        {/* <Route>
-          <Route path="/user">
-            <Route path="login" element={<Login />} />
-            <Route path="signup" element={<Signup />} />
-          </Route>
-        </Route> */}
       </Routes>
     </BrowserRouter>
   );
