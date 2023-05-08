@@ -9,7 +9,7 @@ import {
     StFlex,
     StLayout,
     StDropdownList,
-    StMyPage,
+    StMyPage2,
     StItem,
     StPicture,
     StItems,
@@ -84,7 +84,7 @@ function Auction() {
         <div ref={allRef}>
             <StLayout ref={allRef}>
                 <StFlex ref={allRef}>
-                    <StMyPage>
+                    <StMyPage2>
                         <div onClick={() => setIsOpen(!isOpen)}><h2>
                             {selectedItem}</h2>
                         </div>
@@ -96,7 +96,7 @@ function Auction() {
                                 </div>
                             )}
                         </div>
-                    </StMyPage>
+                    </StMyPage2>
                     <StItems>
                         {products?.map((item) => {
                             return (

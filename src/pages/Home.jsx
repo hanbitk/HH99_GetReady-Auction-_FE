@@ -24,21 +24,23 @@ import {
 import { useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { useCookies } from "react-cookie";
+import { useDispatch } from "react-redux";
+import { showUser } from "../redux/modules/users";
 
 function Home() {
   const [cookies] = useCookies("userAuth");
   const navigate = useNavigate();
 
   //페이지가 로드될 때 로그인 여부 판단
-  useEffect(() => {
-    const userAuth = cookies.userAuth;
-    if (userAuth) {
-      console.log("로그인한 유저입니다");
-      navigate("/");
-    } else {
-      return console.log("로그인 안한 유저입니다");
-    }
-  }, []);
+  // useEffect(() => {
+  //   const userAuth = cookies.userAuth;
+  //   if (userAuth) {
+  //     console.log("로그인한 유저입니다");
+  //     navigate("/");
+  //   } else {
+  //     return console.log("로그인 안한 유저입니다");
+  //   }
+  // }, []);
 
   const products = useSelector((state) => state.products.products);
 

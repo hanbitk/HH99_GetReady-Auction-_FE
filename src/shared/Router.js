@@ -9,8 +9,7 @@ import MyPage from "../pages/MyPage";
 import AuctionDetail from "../pages/AuctionDetail";
 import MyPageBidding from "../pages/MyPageBidding";
 import Layout from "../components/Layout/Layout";
-import PrivateRoute from "./PrivateRoute";
-import { useCookies } from "react-cookie";
+import MyPageAuction from "../pages/MyPageAuction";
 
 function Router() {
   return (
@@ -20,9 +19,10 @@ function Router() {
           <Route path="/" element={<Home />} />
           <Route path="/auction" element={<Auction />} />
           <Route path="/auction/add" element={<AuctionAdd />} />
-          <Route path="/mypage" element={<MyPage />} />
           <Route path="/auction/detail" element={<AuctionDetail />} />
+          <Route path="/mypage" element={<MyPage />} />
           <Route path="/mypage/bidding" element={<MyPageBidding />} />
+          <Route path="/mypage/auction" element={<MyPageAuction/>}/>
         </Route>
 
         <Route path="/user/login" element={<Login />} />

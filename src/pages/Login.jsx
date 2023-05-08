@@ -21,12 +21,12 @@ import { AiOutlineUser } from "react-icons/ai";
 import { RiLockPasswordLine } from "react-icons/ri";
 import { MdLogin } from "react-icons/md";
 import useInput from "../hooks/useInput";
-import { useMutation, useQueryClient } from "react-query";
-import { login, getUserAuth } from "../core/api/auth/login";
-import { useQuery } from "react-query";
-import { useEffect } from "react";
+import { useMutation } from "react-query";
+import { login } from "../core/api/auth/login";
 import { useCookies } from "react-cookie";
 import { useNavigate, Navigate } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { showUser } from "../redux/modules/users";
 
 function Login() {
   const [username, onChangeUsernameHandler] = useInput();
@@ -34,27 +34,29 @@ function Login() {
 
   const [cookies, setCookie, removeCookie] = useCookies();
 
-  console.log(cookies)
-
   const navigate = useNavigate();
+
+  const dispatch = useDispatch();
 
   const mutation = useMutation(login, {
     async onSuccess(data) {
       const { token, loginSuccess } = data;
       const expireTime = new Date(new Date().getTime() + 5 * 60 * 1000);
-      setCookie("userAuth", token, { path: "/", expires: expireTime });
       console.log(loginSuccess);
-      // setTimeout(() =>{
-      //   navigate('/')
-      // }, 1000);
+      setCookie("userAuth", token, { path: "/", expires: expireTime });
+      setTimeout(() => {
+        navigate("/");
+      }, 1000);
     },
   });
 
+  console.log(mutation);
 
   const loginHandler = (e) => {
     e.preventDefault();
 
-    if(!username || !password) return alert('사용자 이름과 비밀번호를 입력해주세요')
+    if (!username || !password)
+      return alert("사용자 이름과 비밀번호를 입력해주세요");
 
     mutation.mutate({
       username,
