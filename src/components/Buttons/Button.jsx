@@ -9,6 +9,7 @@ function Button({ children, size, fontSize, padding, height, onClick, background
       padding={padding}
       height={height}
       onClick={onClick}
+      backgroundColor={backgroundColor}
     >
       {children}
     </StButton>

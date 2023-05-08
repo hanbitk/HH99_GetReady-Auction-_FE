@@ -21,7 +21,7 @@ function Router() {
                 <Route path="/auction" element={<Auction />} />
                 <Route path="/auctionAdd" element={<AuctionAdd />} />
                 <Route path="/myPage" element={<MyPage />} />
-                <Route path="/AuctionDetail" element={<AuctionDetail />} />
+                <Route path="/auction/detail" element={<AuctionDetail />} />
                 <Route path="/mypage/bidding" element={<MyPageBidding />} />
 
         <Route path="/user/login" element={<Login />} />
