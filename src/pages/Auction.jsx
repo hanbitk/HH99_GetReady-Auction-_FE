@@ -15,7 +15,7 @@ import {
     StItems,
     StBackgroundImage
 } from '../styles/MyPage.styles'
-function Action() {
+function Auction() {
     //이동
     const nav = useNavigate()
     //이동 - 내경매조회
