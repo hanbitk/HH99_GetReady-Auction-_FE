@@ -103,7 +103,6 @@ function AuctionDetail() {
 
     return (
         <Stasd>
-            <Header />
             <StLayout>
                 <h1>TITLE :</h1>
                 <StTitle>

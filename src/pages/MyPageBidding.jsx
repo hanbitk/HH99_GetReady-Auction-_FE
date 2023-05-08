@@ -74,7 +74,6 @@ useEffect(() => {
   return (
    
     <div ref={allRef}>
-    <Header />
     <StLayout ref={allRef}>
         <StFlex ref={allRef}>
             <StMyPage>

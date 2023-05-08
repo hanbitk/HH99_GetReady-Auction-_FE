@@ -76,7 +76,6 @@ function AuctionAdd() {
     
     return (
         <>
-            <Header />
             <StLayout>
                 <StFlex>
 
@@ -121,7 +120,6 @@ function AuctionAdd() {
                         onClick={productAddButton}>제품등록 버튼</Button>
                 </Stbutton>
             </StLayout>
-            <div>footer</div>
         </>
 
     )
