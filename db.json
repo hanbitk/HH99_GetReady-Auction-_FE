@@ -1,0 +1,49 @@
+{
+  "todos": [
+    {
+      "title": "123",
+      "content": "제품 소개입니다 어쩌구 저쩔구입니다람쥐123",
+      "minPrice": "0123",
+      "deadline": "2023년5월8일10시26분54초",
+      "category": "123",
+      "id": 1,
+      "comment": "123"
+    },
+    {
+      "title": "글 제목입니다",
+      "content": "제품 소개입니다 어쩌구 저쩌구입니다.",
+      "minPrice": "10,000",
+      "deadline": "2023년5월8일10시28분30초",
+      "category": "신발",
+      "id": 2
+    },
+    {
+      "title": "글제목입니다",
+      "content": "제품 소개입니다",
+      "minPrice": "12000",
+      "deadline": "2023년5월8일14시44분2초",
+      "category": "카테고리입니다",
+      "id": 3
+    },
+    {
+      "title": "제목",
+      "content": "소개",
+      "minPrice": "20000",
+      "deadline": "2023년5월8일14시46분0초",
+      "category": "카테고리",
+      "id": 4
+    }
+  ],
+  "comments": [
+    {
+      "id": 1,
+      "nickName": "댓글이름",
+      "comment": "댓글내용"
+    },
+    {
+      "id": 2,
+      "nickName": "댓글이름22",
+      "comment": "댓글내용222"
+    }
+  ]
+}

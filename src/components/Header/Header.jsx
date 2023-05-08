@@ -27,6 +27,7 @@ function Header() {
       <Button
         size="var(--size-small)"
         fontSize="var(--font-small)"
+        color=""
         padding="8px"
         onClick={() => navigate("/user/login")}
       >

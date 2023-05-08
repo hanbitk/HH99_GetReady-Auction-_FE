@@ -5,10 +5,13 @@ export const GlobalStyles = createGlobalStyle`
         /* Color */
         --color-black: #000000; /* 191919 */
         --color-white: #ffffff;
-        --color-light-white: #f5f5f5;
+        --color-light-white: #f7f9fb;
         --color-gray: #d9d9d9;
         --color-light-gray: #dddddd;
-
+        --color-green: #687862;
+        --color-dark-blue: #31708e;
+        --color-blue: #5085a5;
+        --color-primary: #8fc1e3;
         /* Font size */
         --font-extra-large: 50px;
         --font-large: 32px;
@@ -38,8 +41,8 @@ export const GlobalStyles = createGlobalStyle`
     }
 
     body{
-        font-family: 'Inter', sans-serif;
-        background-color: var(--color-white);
+    font-family: 'Inter', sans-serif;
+    background-color: var(--color-light-white);
     }
 
     button{
