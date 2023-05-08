@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 import React from 'react'
 import { useNavigate, Link } from 'react-router-dom/dist'
 import Button from '../components/Buttons/Button'
@@ -117,6 +118,26 @@ function Action() {
             </StLayout>
         </div>
     )
+=======
+import React from "react";
+import { useNavigate } from "react-router-dom/dist";
+import { useCookies } from "react-cookie";
+
+function Auction() {
+  const nav = useNavigate();
+  const HomeButton = () => {
+    nav("/");
+  };
+
+  const [cookies] = useCookies("userAuth");
+  const isAuthenticated = cookies.userAuth != null;
+
+  return (
+    <>
+      Auction
+    </>
+  );
+>>>>>>> a1de9ffc367b5b64d5a77f1fe1b6490f39bdb0d8
 }
 
-export default Action
+export default Auction;

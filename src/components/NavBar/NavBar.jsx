@@ -1,18 +1,22 @@
 import React from "react";
-import { StNavBar, linkStyle } from "../../styles/NavBar.styles";
-import { Link } from "react-router-dom";
+import { StNavBar } from "../../styles/NavBar.styles";
+import { NavBarLink } from "../../styles/GlobalStyles";
 
-function NavBar() {
+function NavBar({ fontSize, fontWeight }) {
   return (
     <StNavBar>
       <ul>
-        <Link to="#" style={linkStyle}>
+        <NavBarLink to="#" fontSize={fontSize} fontWeight={fontWeight}>
           <li>소개</li>
-        </Link>
+        </NavBarLink>
 
-        <Link to="/auction" style={linkStyle}>
+        <NavBarLink to="/auction" fontSize={fontSize} fontWeight={fontWeight}>
           <li>경매품</li>
-        </Link>
+        </NavBarLink>
+
+        <NavBarLink to="/auction" fontSize={fontSize} fontWeight={fontWeight}>
+          <li>핫한 상품</li>
+        </NavBarLink>
       </ul>
     </StNavBar>
   );
