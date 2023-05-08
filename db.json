@@ -1,0 +1,44 @@
+{
+  "users": [
+    {
+      "id": 1,
+      "username": "john",
+      "password": "password1"
+    },
+    {
+      "id": 2,
+      "username": "jane",
+      "password": "password2"
+    },
+    {
+      "username": "interpac02",
+      "password": "Interpac02",
+      "id": 3
+    },
+    {
+      "username": "interpac02",
+      "password": "Iohdojo123",
+      "id": 4
+    },
+    {
+      "username": "interpac02",
+      "password": "Interpac02",
+      "id": 5
+    },
+    {
+      "username": "interpac02",
+      "password": "Interpac02",
+      "id": 6
+    },
+    {
+      "username": "interpac02",
+      "password": "Interpac02",
+      "id": 7
+    },
+    {
+      "username": "interpac03",
+      "password": "Interpac03",
+      "id": 8
+    }
+  ]
+}

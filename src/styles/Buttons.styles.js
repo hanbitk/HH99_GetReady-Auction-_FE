@@ -1,13 +1,17 @@
 import styled from "styled-components";
 
 export const StButton = styled.button`
-  border: 1px solid black;
   width: ${(props) => props.size};
   font-size: ${(props) => props.fontSize};
   border-radius: 4px;
   padding: ${(props) => props.padding};
+  height: ${(props) => props.height};
+  color: var(--color-light-white);
+  background-color: ${(props) => props.backgroundColor || "var(--color-primary)"};
+
 
   &:hover {
-    transform: translateY(2px);
+    background-color: var(--color-blue);
+    transform: translateY(1px);
   }
 `;

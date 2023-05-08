@@ -1,31 +1,28 @@
 import styled from "styled-components";
 
-export const StHeader = styled.header`
-  border: 1px solid red;
-  padding: 10px 30px;
-  width: 100vw;
+export const StHeaderContainer = styled.header`
+  z-index: 999;
+  position: sticky;
+  top: 0;
+  background: var(--color-light-white);
+`;
+
+export const StHeader = styled.div`
+  padding: 20px;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  background: var(--color-white);
-  position: sticky;
-  top: 0;
-  z-index: 1;
+  max-width: 1280px;
+  margin: 0 auto;
 `;
 
-export const StLogo = styled.div``;
-
-export const logoLinkStyle = {
-  textDecoration: "none",
-  color: "black",
-  cursor: "pointer",
-  fontWeight: "var(--weight-semi-bold)",
-  fontSize: "var(--font-medium)",
-};
+export const StLogo = styled.div`
+  display: flex;
+  align-items: center;
+`;
 
 export const styleFlex = {
   display: "flex",
   justifyContent: "space-between",
-  alignIterms: "center",
   gap: "50px",
 };
