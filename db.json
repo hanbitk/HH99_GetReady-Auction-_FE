@@ -34,6 +34,11 @@
       "username": "interpac02",
       "password": "Interpac02",
       "id": 7
+    },
+    {
+      "username": "interpac03",
+      "password": "Interpac03",
+      "id": 8
     }
   ]
 }

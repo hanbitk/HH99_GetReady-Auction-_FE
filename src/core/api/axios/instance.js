@@ -2,13 +2,17 @@ import axios from "axios";
 
 const instance = axios.create({
   baseURL: process.env.REACT_APP_SERVER_URL,
+  headers: {
+    "Access-Control-Allow-Origin": "*",
+  },
 });
 
-// export const instance2 = axios.create({
-//   baseURL: process.env.REACT_APP_URL,
-//   headers: {
-//     "Access-Control-Allow-Origin": "*",
-//   },
+// instance2.interceptors.request.use((config) => {
+//   if (config.headers === undefined) return;
+//   const token = localStorage.getItem("id");
+//   config.headers["Authorization"] = `${token}`;
+//   // console.log(config)
+//   return config;
 // });
 
 instance.interceptors.request.use(

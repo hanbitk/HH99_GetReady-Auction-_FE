@@ -20,22 +20,20 @@ import Button from "../components/Buttons/Button";
 import { AiOutlineUser } from "react-icons/ai";
 import { RiLockPasswordLine } from "react-icons/ri";
 import { MdLogin } from "react-icons/md";
-import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { signUp } from "../api/users";
+import useInput from "../hooks/useInput";
 import { useMutation, useQueryClient } from "react-query";
-import { postSignup } from "../api/login";
-import { register } from "../api/users";
+import { signUp } from "../core/api/auth/signup";
 
 function Signup() {
   const navigate = useNavigate();
-  const [userInfo, setUserInfo] = useState({ username: "", password: "" });
-  // const [errors, setErrors] = useState({ username: "", password: "" });
+  const [username, onChangeUsernameHandler] = useInput();
+  const [password, onChangePasswordHandler] = useInput();
 
-  const changeHandler = (e) => {
-    const { name, value } = e.target;
-    setUserInfo({ ...userInfo, [name]: value });
-  };
+  // const changeHandler = (e) => {
+  //   const { name, value } = e.target;
+  //   setUserInfo({ ...userInfo, [name]: value });
+  // };
 
   // const queryClient = useQueryClient();
   // const mutation = useMutation(signUp, {
@@ -44,7 +42,7 @@ function Signup() {
   //   },
   // });
   const queryClient = useQueryClient();
-  const mutation = useMutation(register, {
+  const mutation = useMutation(signUp, {
     onSuccess: () => {
       console.log("회원가입 완료");
     },
@@ -55,36 +53,29 @@ function Signup() {
     const usernameRegex = /^[a-z0-9]{4,10}$/;
     const passwordRegex = /^[a-zA-Z0-9]{8,15}$/;
 
-    if (!userInfo.username || !userInfo.password) {
+    if (!username || !password) {
       alert("이메일과 비밀번호를 모두 입력하세요.");
       return;
-    } else if (!usernameRegex.test(userInfo.username)) {
+    } else if (!usernameRegex.test(username)) {
       alert(
         "사용자 이름은 최소 4~10자, 알파벳 소문자 및 숫자로 구성되어야 합니다."
       );
       return;
-    } else if (!passwordRegex.test(userInfo.password)) {
+    } else if (!passwordRegex.test(password)) {
       alert(
         "비밀번호는 최소 8~15자, 알파벳 대소문자 및 숫자로 구성되어야 합니다."
       );
       return;
     } else {
-      // console.log("username", userInfo.username);
-      // mutation.mutate({
-      //   username: userInfo.username,
-      //   password: userInfo.password,
-      // });
-      console.log("username", userInfo.username);
+      console.log("username", username);
       mutation.mutate({
-        id: userInfo.username,
-        password: userInfo.password,
+        username,
+        password,
       });
     }
 
-    console.log("username", userInfo.username);
-    console.log("password", userInfo.password);
-
-    setUserInfo({ username: "", password: "" });
+    console.log("username", username);
+    console.log("password", password);
 
     // setTimeout(() => {
     //   navigate("/auction");
@@ -117,8 +108,8 @@ function Signup() {
                     type="text"
                     id="username"
                     name="username"
-                    value={userInfo.username}
-                    onChange={changeHandler}
+                    value={username}
+                    onChange={onChangeUsernameHandler}
                   />
                 </StInputBox>
                 <StInputBox borderRadius="0 0 10px 10px">
@@ -128,8 +119,8 @@ function Signup() {
                     type="password"
                     id="password"
                     name="password"
-                    value={userInfo.password}
-                    onChange={changeHandler}
+                    value={password}
+                    onChange={onChangePasswordHandler}
                   />
                 </StInputBox>
                 {/* {errors && (

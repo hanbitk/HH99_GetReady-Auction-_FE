@@ -22,7 +22,7 @@ import { RiLockPasswordLine } from "react-icons/ri";
 import { MdLogin } from "react-icons/md";
 import useInput from "../hooks/useInput";
 import { useMutation, useQueryClient } from "react-query";
-import { login, user } from "../api/users";
+import { login } from "../core/api/auth/login";
 import { useQuery } from "react-query";
 import { useEffect } from "react";
 
@@ -30,21 +30,29 @@ function Login() {
   const [username, onChangeUsernameHandler] = useInput();
   const [password, onChangePasswordHandler] = useInput();
 
+  // const { data } = useQuery("token", getUser);
+  // console.log(data);
 
-  const queryClient = useQueryClient();
   const mutation = useMutation(login, {
-    onSuccess: () =>{
-      console.log('로그인 완료')
-    }
-  })
+    onSuccess: async  () => {
+      console.log("로그인 완료");
+      // await getUserAuth()
+    },
+  });
+
+  // const authMutation = useMutation(getUser, {
+  //   onSuccess: () => {
+  //     console.log("유저 인증 확인");
+  //   },
+  // });
 
   const loginHandler = (e) => {
-    e.preventDefault()
+    e.preventDefault();
     mutation.mutate({
-      id: username,
-      password: password,
-    })
-  }
+      username,
+      password,
+    });
+  };
 
   return (
     <StContainer>
@@ -67,11 +75,19 @@ function Login() {
               <StLogInInputs>
                 <StInputBox borderRadius="10px 10px 0 0">
                   <AiOutlineUser style={iconStyle} />
-                  <StLogInInput placeholder="Username" type="text" onChange={onChangeUsernameHandler} />
+                  <StLogInInput
+                    placeholder="Username"
+                    type="text"
+                    onChange={onChangeUsernameHandler}
+                  />
                 </StInputBox>
                 <StInputBox borderRadius="0 0 10px 10px">
                   <RiLockPasswordLine style={iconStyle} />
-                  <StLogInInput placeholder="Password" type="password" onChange={onChangePasswordHandler}/>
+                  <StLogInInput
+                    placeholder="Password"
+                    type="password"
+                    onChange={onChangePasswordHandler}
+                  />
                 </StInputBox>
               </StLogInInputs>
             </StLogIn>
