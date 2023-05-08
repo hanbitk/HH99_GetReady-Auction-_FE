@@ -1,5 +1,5 @@
 import React from "react";
-import { BrowserRouter, Route, Routes } from "react-router-dom";
+import { BrowserRouter, Route, Routes, Switch } from "react-router-dom";
 import Home from "../pages/Home";
 import Login from "../pages/Login";
 import Signup from "../pages/Signup";
@@ -8,6 +8,8 @@ import AuctionAdd from "../pages/AuctionAdd";
 import MyPage from "../pages/MyPage";
 import AuctionDetail from "../pages/AuctionDetail";
 import Layout from "../components/Layout/Layout";
+import PrivateRoute from "./PrivateRoute";
+import { useCookies } from "react-cookie";
 
 function Router() {
   return (

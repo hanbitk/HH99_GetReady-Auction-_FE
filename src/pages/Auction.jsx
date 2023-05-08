@@ -1,17 +1,21 @@
-import React from 'react'
-import { useNavigate } from 'react-router-dom/dist'
+import React from "react";
+import { useNavigate } from "react-router-dom/dist";
+import { useCookies } from "react-cookie";
 
-function Action() {
-    const nav = useNavigate()
-    const HomeButton = () => {
-        nav("/")
-    }
-    return (
-        <>
-            <div>Action 전체 상품조회</div>
-            <button onClick={HomeButton}>홈으로</button>
-        </>
-    )
+function Auction() {
+  const nav = useNavigate();
+  const HomeButton = () => {
+    nav("/");
+  };
+
+  const [cookies] = useCookies("userAuth");
+  const isAuthenticated = cookies.userAuth != null;
+
+  return (
+    <>
+      Auction
+    </>
+  );
 }
 
-export default Action
+export default Auction;

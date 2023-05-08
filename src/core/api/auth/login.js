@@ -1,13 +1,13 @@
 import axios from "axios";
-import instance from "../axios/instance";
+import instance, { baseURL } from "../axios/instance";
+
 
 const login = async (users) => {
-  console.log(users);
   try {
     const response = await instance.post(`/user/login`, users);
-    const { token } = response.data;
-    axios.defaults.headers.common["Authorization"] = `Bearer ${token}`;
-    console.log(axios.defaults.headers.common);
+    const accessToken = response.headers.get("authorization");
+    const token = accessToken.split(" ")[1];
+    return token;
   } catch (error) {
     console.error(error);
     throw error;
@@ -16,10 +16,11 @@ const login = async (users) => {
 
 // const getUserAuth = async () => {
 //   try {
-//     console.log(response.data);
-//     const response = await instance.get(`/user/signup`, {
+//     const accessToken = response.headers.get("authorization");
+//     console.log(accessToken)
+//     const response = await baseURL.get(`/mypage/auction`, {
 //       headers: {
-//         Authorization: `Bearer ${response.data.token}`,
+//         Authorization: `Bearer ${accessToken}`,
 //       },
 //     });
 //     console.log(response.data);

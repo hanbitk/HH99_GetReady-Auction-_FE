@@ -23,8 +23,10 @@ import {
 } from "../styles/Section.styles";
 import { useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
+import { useCookies } from "react-cookie";
 
 function Home() {
+  const [cookies] = useCookies('userAuth');
   const navigate = useNavigate();
 
   const products = useSelector((state) => state.products.products);

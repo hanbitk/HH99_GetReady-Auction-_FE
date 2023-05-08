@@ -22,29 +22,28 @@ import { RiLockPasswordLine } from "react-icons/ri";
 import { MdLogin } from "react-icons/md";
 import useInput from "../hooks/useInput";
 import { useMutation, useQueryClient } from "react-query";
-import { login } from "../core/api/auth/login";
+import { login, getUserAuth } from "../core/api/auth/login";
 import { useQuery } from "react-query";
 import { useEffect } from "react";
+import { useCookies } from "react-cookie";
+import { useNavigate, Navigate } from "react-router-dom";
 
 function Login() {
   const [username, onChangeUsernameHandler] = useInput();
   const [password, onChangePasswordHandler] = useInput();
 
-  // const { data } = useQuery("token", getUser);
-  // console.log(data);
+  const [cookies, setCookie, removeCookie] = useCookies();
+
+  const navigate = useNavigate();
 
   const mutation = useMutation(login, {
-    onSuccess: async  () => {
+    onSuccess: async () => {
       console.log("로그인 완료");
-      // await getUserAuth()
+      const token = mutation.data
+      const expireTime = new Date(new Date().getTime() + 5 * 60 * 1000);
+      setCookie("userAuth", token, { path: "/", expires: expireTime });
     },
   });
-
-  // const authMutation = useMutation(getUser, {
-  //   onSuccess: () => {
-  //     console.log("유저 인증 확인");
-  //   },
-  // });
 
   const loginHandler = (e) => {
     e.preventDefault();
@@ -52,6 +51,8 @@ function Login() {
       username,
       password,
     });
+
+    <Navigate to="/" />
   };
 
   return (

@@ -7,14 +7,6 @@ const instance = axios.create({
   },
 });
 
-// instance2.interceptors.request.use((config) => {
-//   if (config.headers === undefined) return;
-//   const token = localStorage.getItem("id");
-//   config.headers["Authorization"] = `${token}`;
-//   // console.log(config)
-//   return config;
-// });
-
 instance.interceptors.request.use(
   // function that run before request
   function (config) {
@@ -41,6 +33,21 @@ instance.interceptors.response.use(
     return Promise.reject(error);
   }
 );
+
+export const baseURL = axios.create({
+  baseURL: process.env.REACT_APP_SERVER_URL,
+  headers: {
+    "Access-Control-Allow-Origin": "*",
+  },
+});
+
+baseURL.interceptors.request.use((config) => {
+  console.log(config)
+  if (config.headers === undefined) return;
+  const token = config.headers.get("authorization");
+  config.headers["Authorization"] = `${token}`;
+  return config;
+});
 
 
 export default instance;
