@@ -7,6 +7,7 @@ import Auction from "../pages/Auction";
 import AuctionAdd from "../pages/AuctionAdd";
 import MyPage from "../pages/MyPage";
 import AuctionDetail from "../pages/AuctionDetail";
+import MyPageBidding from "../pages/MyPageBidding";
 function Router() {
     return (
         <BrowserRouter>
@@ -15,9 +16,10 @@ function Router() {
                 <Route path="/user/Login" element={<Login />} />
                 <Route path="/user/Signup" element={<Signup />} />
                 <Route path="/Auction" element={<Auction />} />
-                <Route path="/AuctionAdd" element={<AuctionAdd />} />
+                <Route path="/auction/Add" element={<AuctionAdd />} />
                 <Route path="/MyPage" element={<MyPage />} />
-                <Route path="/AuctionDetail" element={<AuctionDetail />} />
+                <Route path="/auction/:id" element={<AuctionDetail />} />
+                <Route path="/mypage/bidding" element={<MyPageBidding />} />
 
 
 
