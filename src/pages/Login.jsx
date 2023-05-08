@@ -34,21 +34,28 @@ function Login() {
 
   const [cookies, setCookie, removeCookie] = useCookies();
 
+  console.log(cookies)
+
   const navigate = useNavigate();
 
   const mutation = useMutation(login, {
-    async onSuccess(token) {
-      console.log("로그인 완료");
+    async onSuccess(data) {
+      const { token, loginSuccess } = data;
       const expireTime = new Date(new Date().getTime() + 5 * 60 * 1000);
       setCookie("userAuth", token, { path: "/", expires: expireTime });
-      setTimeout(() =>{
-        navigate('/')
-      }, 1000);
+      console.log(loginSuccess);
+      // setTimeout(() =>{
+      //   navigate('/')
+      // }, 1000);
     },
   });
 
+
   const loginHandler = (e) => {
     e.preventDefault();
+
+    if(!username || !password) return alert('사용자 이름과 비밀번호를 입력해주세요')
+
     mutation.mutate({
       username,
       password,
