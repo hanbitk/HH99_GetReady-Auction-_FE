@@ -37,11 +37,13 @@ function Login() {
   const navigate = useNavigate();
 
   const mutation = useMutation(login, {
-    onSuccess: async () => {
+    async onSuccess(token) {
       console.log("로그인 완료");
-      const token = mutation.data
       const expireTime = new Date(new Date().getTime() + 5 * 60 * 1000);
       setCookie("userAuth", token, { path: "/", expires: expireTime });
+      setTimeout(() =>{
+        navigate('/')
+      }, 1000);
     },
   });
 
@@ -51,8 +53,6 @@ function Login() {
       username,
       password,
     });
-
-    <Navigate to="/" />
   };
 
   return (
