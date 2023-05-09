@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import Section from "../components/Section/Section";
 import Button from "../components/Buttons/Button";
 import {
@@ -24,10 +24,23 @@ import {
 import { useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { useCookies } from "react-cookie";
+import { useDispatch } from "react-redux";
+import { showUser } from "../redux/modules/users";
 
 function Home() {
-  const [cookies] = useCookies('userAuth');
+  const [cookies] = useCookies("userAuth");
   const navigate = useNavigate();
+
+  //페이지가 로드될 때 로그인 여부 판단
+  // useEffect(() => {
+  //   const userAuth = cookies.userAuth;
+  //   if (userAuth) {
+  //     console.log("로그인한 유저입니다");
+  //     navigate("/");
+  //   } else {
+  //     return console.log("로그인 안한 유저입니다");
+  //   }
+  // }, []);
 
   const products = useSelector((state) => state.products.products);
 
@@ -179,7 +192,10 @@ function Home() {
           <StHotListBox>
             {products.map((product) => {
               return (
-                <ProductsBox key={product.id} onClick={() => navigate("/auction")}>
+                <ProductsBox
+                  key={product.id}
+                  onClick={() => navigate("/auction")}
+                >
                   <Deadline>{product.deadline}</Deadline>
                   <StHotListImg src="https://hips.hearstapps.com/hmg-prod/images/pringles-template-lightlysalted-1546635619.jpg?crop=1xw:1xh;center,top&resize=980:*" />
                   <h4>{product.title}</h4>
