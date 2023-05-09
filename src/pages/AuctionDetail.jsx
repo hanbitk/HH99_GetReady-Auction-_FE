@@ -1,7 +1,6 @@
 import React from "react";
 import { useState, useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom/dist";
-// import axios from 'axios'
 import api from "../axios/api";
 import {
   StLayout,
@@ -19,6 +18,7 @@ import {
   ModalContent,
   ModalButton,
 } from "../styles/AuctionDetali.styles";
+import {getPostDetail, updatePost, deletePost} from '../core/api/posts'
 import { useQuery, useQueryClient, useMutation } from "react-query";
 import { useCookies } from "react-cookie";
 
@@ -114,6 +114,27 @@ function AuctionDetail() {
     });
   };
 
+  const deleteMutation = useMutation(deletePost, {
+    onSuccess: () => {
+    queryClient.invalidateQueries("posts");
+    console.log("포스트 삭제 완료하였습니다!");
+    },
+    });
+    
+    if (isLoading) {
+    return <div>Loading...</div>;
+    }
+    
+    if (isError) {
+    return <div>Error occurred.</div>;
+    }
+
+  const deleteHandler = async (id) => {
+    const newFeed = data?.filter((post) => post.id !== id);
+    deleteMutation.mutate({id, token});
+    return newFeed
+    };
+
   return (
     <Stasd>
       <StLayout>
@@ -166,7 +187,7 @@ function AuctionDetail() {
           </div>
         </StFlex>
         <StDescription>
-          {productsFind?.content}
+          {data?.content}
           {modalOpen && (
             <div>
               <StModalRemove
