@@ -7,7 +7,7 @@ export const StButton = styled.button`
   padding: ${(props) => props.padding};
   height: ${(props) => props.height};
   color: var(--color-light-white);
-  background-color: ${(props) => props.backgroundColor || "var(--color-primary)"};
+  background-color: ${(props) => props.backgroundcolor || "var(--color-primary)"};
 
 
   &:hover {

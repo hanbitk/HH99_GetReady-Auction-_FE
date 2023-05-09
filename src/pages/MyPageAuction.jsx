@@ -10,10 +10,33 @@ import {
 } from "../styles/MyPage.styles";
 import { useSelector } from "react-redux";
 import Section from "../components/Section/Section";
-
+import { getMyPosts } from "../core/api/posts";
+import { useMutation, useQuery, useQueryClient } from "react-query";
+import { useCookies } from "react-cookie";
 function MyPageAuction() {
   const navigate = useNavigate();
-  const products = useSelector((state) => state.products.products);
+
+  // const token = useToken();
+  const [cookies, setCookie, removeCookie] = useCookies("userAuth");
+  const token = cookies.userAuth;
+
+  const { isLoading, isError, data } = useQuery("posts", async () => {
+    const products = await getMyPosts(token);
+    return products.data;
+  });
+
+  console.log(data);
+
+  if (isLoading) {
+    return <div>Loading...</div>;
+  }
+
+  if (isError) {
+    return <div>Error occurred.</div>;
+  }
+
+  console.log(data);
+
   return (
     <Section>
       <SectionMyPage>
@@ -40,7 +63,7 @@ function MyPageAuction() {
           </Button>
         </StMyPageButtons>
         <StMyPageArticle>
-          {products.map((product) => {
+          {data?.map((product) => {
             return (
               <ProductsBox
                 key={product.id}

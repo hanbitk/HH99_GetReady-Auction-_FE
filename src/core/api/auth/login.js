@@ -5,6 +5,7 @@ const login = async (users) => {
   try {
     const response = await instance.post(`/user/login`, users);
     const accessToken = response.headers.get("authorization");
+    console.log(response)
     const token = accessToken.split(" ")[1];
     const loginSuccess = response.data.message;
     return { token, loginSuccess };

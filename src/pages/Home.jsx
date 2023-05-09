@@ -22,10 +22,10 @@ import {
   Deadline,
 } from "../styles/Section.styles";
 import { useNavigate } from "react-router-dom";
-import { useSelector } from "react-redux";
 import { useCookies } from "react-cookie";
-import { useDispatch } from "react-redux";
-import { showUser } from "../redux/modules/users";
+import { getHotPosts } from "../core/api/posts";
+import { useQuery } from "react-query";
+import { useSelector } from "react-redux";
 
 function Home() {
   const [cookies] = useCookies("userAuth");
@@ -43,6 +43,21 @@ function Home() {
   // }, []);
 
   const products = useSelector((state) => state.products.products);
+
+  // const { isLoading, isError, data } = useQuery("posts", async () => {
+  //   const products = await getHotPosts();
+  //   return products.data;
+  // });
+
+  // console.log(data)
+
+  // if (isLoading) {
+  //   return <div>Loading...</div>;
+  // }
+
+  // if (isError) {
+  //   return <div>Error occurred.</div>;
+  // }
 
   return (
     <>
@@ -190,7 +205,7 @@ function Home() {
             </StDescription>
           </StHotListDescription>
           <StHotListBox>
-            {products.map((product) => {
+            {products?.map((product) => {
               return (
                 <ProductsBox
                   key={product.id}
