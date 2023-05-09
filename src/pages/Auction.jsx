@@ -67,6 +67,7 @@ function Auction() {
 
   const { isLoading, isError, data } = useQuery("posts", async () => {
     const products = await getPosts();
+    console.log(data)
     return products.data;
   });
 

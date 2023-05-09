@@ -64,7 +64,7 @@ const updatePost = async (payload) => {
       }
     );
     console.log("response.data = ", response.data);
-    return response.data;
+    return response.data.data;
   } catch {
     console.log("포스트 수정 오류");
   }
@@ -81,7 +81,7 @@ const deletePost = async (payload) => {
         },
       }
     );
-    return response.data;
+    return response.data.data;
   } catch (err) {
     console.log(`데이터 불러오는 중에 오류 발생: ${err}`);
   }
@@ -91,7 +91,7 @@ const getPostDetail = async (id) => {
   try {
   const response = await axios.get(`http://3.26.95.244:8080/auction/${id}`);
   // console.log("response.data = ", response.data)
-  return response.data;
+  return response.data.data;
   } catch (err) {
   console.log(`데이터 불러오는 중에 오류 발생: ${err}`);
   }

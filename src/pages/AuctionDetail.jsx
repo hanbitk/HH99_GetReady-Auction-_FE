@@ -18,7 +18,7 @@ import {
   ModalContent,
   ModalButton,
 } from "../styles/AuctionDetali.styles";
-import {getPostDetail, updatePost, deletePost} from '../core/api/posts'
+import { getPostDetail, updatePost, deletePost } from "../core/api/posts";
 import { useQuery, useQueryClient, useMutation } from "react-query";
 import { useCookies } from "react-cookie";
 
@@ -40,10 +40,6 @@ function AuctionDetail() {
     deadline: "",
     category: "",
   });
-
-  // 파람스에 맞는 DB찾기
-  // const productsFind = products?.find((item) => item.id == id)
-  // console.log(productsFind)
 
   //수정버튼 모달창 온오프
   const [modalOpen, setModalOpen] = useState(false);
@@ -98,7 +94,6 @@ function AuctionDetail() {
       console.log("포스트 수정 완료하였습니다!");
     },
   });
-  console.log("data=", data);
 
   // 수정버튼 핸들러
   const updateHandler = async (id) => {
@@ -116,24 +111,28 @@ function AuctionDetail() {
 
   const deleteMutation = useMutation(deletePost, {
     onSuccess: () => {
-    queryClient.invalidateQueries("posts");
-    console.log("포스트 삭제 완료하였습니다!");
+      queryClient.invalidateQueries("posts");
+      console.log("포스트 삭제 완료하였습니다!");
     },
-    });
-    
-    if (isLoading) {
+  });
+
+  if (isLoading) {
     return <div>Loading...</div>;
-    }
-    
-    if (isError) {
+  }
+
+  if (isError) {
     return <div>Error occurred.</div>;
-    }
+  }
 
   const deleteHandler = async (id) => {
     const newFeed = data?.filter((post) => post.id !== id);
-    deleteMutation.mutate({id, token});
-    return newFeed
-    };
+    deleteMutation.mutate({ id, token });
+    return newFeed;
+  };
+
+   // 파람스에 맞는 DB찾기
+   const productsFind = data?.find((item) => item.id == id)
+   console.log(productsFind)
 
   return (
     <Stasd>
@@ -196,7 +195,7 @@ function AuctionDetail() {
                 onChange={(e) => setContents(e.target.value)}
                 placeholder="수정할 정보 입력"
               />
-              <Stbutton onClick={() => updateHandler(id)}>수정!</Stbutton>
+              <Stbutton onClick={() => updateHandler(productsFind.id)}>수정!</Stbutton>
             </div>
           )}
         </StDescription>

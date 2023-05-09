@@ -8,6 +8,7 @@ const login = async (users) => {
     console.log(response)
     const token = accessToken.split(" ")[1];
     const loginSuccess = response.data.message;
+    console.log(response.msg)
     return { token, loginSuccess };
   } catch (error) {
     console.error(error);
