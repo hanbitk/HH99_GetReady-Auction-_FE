@@ -29,18 +29,9 @@ import { useSelector } from "react-redux";
 
 function Home() {
   const [cookies] = useCookies("userAuth");
+  const token = cookies.userAuth;
   const navigate = useNavigate();
 
-  //페이지가 로드될 때 로그인 여부 판단
-  // useEffect(() => {
-  //   const userAuth = cookies.userAuth;
-  //   if (userAuth) {
-  //     console.log("로그인한 유저입니다");
-  //     navigate("/");
-  //   } else {
-  //     return console.log("로그인 안한 유저입니다");
-  //   }
-  // }, []);
 
   const products = useSelector((state) => state.products.products);
 
@@ -87,8 +78,17 @@ function Home() {
                 padding="8px"
                 backgroundColor="var(--color-dark-blue)"
                 height="40px"
-                onClick={() => navigate("/user/login")}
-              >
+                onClick={() =>{
+                  if (cookies.hasOwnProperty('userAuth')){
+                    setTimeout(() =>{
+                      navigate('/auction/login')
+                    }, 600)
+                  }else{
+                    setTimeout(() =>{
+                      navigate('/user/signup')
+                    }, 600)
+                  }
+                }}>
                 지금 시작하기
               </Button>
             </StContentDescription>
@@ -127,7 +127,18 @@ function Home() {
               padding="8px"
               backgroundColor="var(--color-dark-blue)"
               height="40px"
-              onClick={() => navigate("/auction/add")}
+              onClick={() =>{
+                if (cookies.hasOwnProperty('userAuth')){
+                  setTimeout(() =>{
+                    navigate('/auction/add')
+                  }, 1000)
+                }else{
+                  alert('로그인이 필요한 페이지입니다.')
+                  setTimeout(() =>{
+                    navigate('/user/login')
+                  }, 500)
+                }
+              }}
             >
               경매 등록
             </Button>
@@ -183,7 +194,18 @@ function Home() {
               padding="8px"
               backgroundColor="var(--color-dark-blue)"
               height="40px"
-              onClick={() => navigate("/auction")}
+              onClick={() =>{
+                if (cookies.hasOwnProperty('userAuth')){
+                  setTimeout(() =>{
+                    navigate('/auction')
+                  }, 500)
+                }else{
+                  alert('로그인이 필요한 페이지입니다.')
+                  setTimeout(() =>{
+                    navigate('/user/login')
+                  }, 500)
+                }
+              }}
             >
               입찰하기
             </Button>

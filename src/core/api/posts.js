@@ -17,10 +17,10 @@ import useToken from "../../hooks/useToken";
 // 전체 경매품 조회
 const getPosts = async () => {
   try {
-    const response = await instance.get(
-      `/auction?page=0&size=6&sort=createdAt,desc`
+    const response = await axios.get(
+      `http://localhost:8080/auction?page=0&size=6&sort=createdAt,desc`
     );
-    return response.data;
+    return response.data.data;
   } catch (err) {
     console.log(`데이터 불러오는 중에 오류 발생: ${err}`);
   }
@@ -29,8 +29,8 @@ const getPosts = async () => {
 // 내 경매품 조회
 const getMyPosts = async (token) => {
   try {
-    const response = await instance.get(
-      `/mypage/auction?page=0&size=5&sort=createdAt,desc`,
+    const response = await axios.get(
+      `http://localhost:8080/mypage/auction?page=0&size=5&sort=createdAt,desc`,
       {
         headers: {
           Authorization: `Bearer ${token}`,
@@ -49,7 +49,7 @@ const updatePost = async (payload) => {
   console.log(payload.content);
   try {
     const response = await axios.put(
-      `http://3.26.95.244:8080/auction/edit/${payload.id}`,
+      `http://localhost:8080/auction/edit/${Number(payload.id)}`,
       {
         title: payload.title,
         category: payload.category,
@@ -74,14 +74,14 @@ const deletePost = async (payload) => {
   console.log(payload);
   try {
     const response = await axios.get(
-      `http://3.26.95.244:8080/auction/delete/${payload.id}`,
+      `http://localhost:8080/auction/delete/${payload.id}`,
       {
         header: {
           Authorization: `Bearer ${payload.token}`,
         },
       }
     );
-    return response.data.data;
+    return response.data;
   } catch (err) {
     console.log(`데이터 불러오는 중에 오류 발생: ${err}`);
   }
@@ -89,9 +89,9 @@ const deletePost = async (payload) => {
 
 const getPostDetail = async (id) => {
   try {
-  const response = await axios.get(`http://3.26.95.244:8080/auction/${id}`);
+  const response = await axios.get(`http://localhost:8080/auction/${id}`);
   // console.log("response.data = ", response.data)
-  return response.data.data;
+  return response.data;
   } catch (err) {
   console.log(`데이터 불러오는 중에 오류 발생: ${err}`);
   }

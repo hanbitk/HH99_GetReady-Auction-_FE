@@ -1,7 +1,7 @@
 import React from "react";
 import { useState, useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom/dist";
-import api from "../axios/api";
+import axios from "axios";
 import {
   StLayout,
   StFlex,
@@ -23,69 +23,25 @@ import { useQuery, useQueryClient, useMutation } from "react-query";
 import { useCookies } from "react-cookie";
 
 function AuctionDetail() {
-  const { id } = useParams();
-  const nav = useNavigate();
   const [contents, setContents] = useState("");
   const [deleteModalOpen, setDeleteModalOpen] = useState(false);
-
-  const HomeButton = () => {
-    nav("/");
-  };
-  //상품 정보와 담는곳
-  const [products, setProducts] = useState();
-  const [product, setProduct] = useState({
-    title: "",
-    content: "",
-    minPrice: "",
-    deadline: "",
-    category: "",
-  });
-
-  //수정버튼 모달창 온오프
   const [modalOpen, setModalOpen] = useState(false);
-  const showModal = () => {
-    setModalOpen(!modalOpen);
-  };
-  // ???
+  const { id } = useParams();
   const [comment, setComment] = useState("");
-  const commentHandler = async () => {
-    await api.patch(`/todos/${id}`, {
-      comment: comment,
-    });
-    setProducts(
-      products.map((item) => {
-        if (item.id == id) {
-          return { ...item, comment: comment };
-        } else {
-          return item;
-        }
-      })
-    );
-  };
+  const navigate = useNavigate();
 
-  const showDeleteModal = () => {
-    setDeleteModalOpen(!deleteModalOpen);
-  };
-
-  const [cookies] = useCookies("userAuth");
-  const token = cookies.userAuth;
-  // console.log("token=", token)
   const { isLoading, isError, data } = useQuery("posts", async () => {
     const products = await getPostDetail(id);
     return products.data;
   });
 
-  let today = new Date(); // today 객체에 Date()의 결과를 넣어줬다
-  let time = {
-    year: today.getFullYear(), //현재 년도
-    month: (today.getMonth() + 1).toString().padStart(2, "0"), // 현재 월
-    date: today.getDate().toString().padStart(2, "0"), // 현제 날짜
-    hours: today.getHours().toString().padStart(2, "0"), //현재 시간
-    minutes: today.getMinutes().toString().padStart(2, "0"), //현재 분
-    seconds: today.getSeconds().toString().padStart(2, "0"), // 현재 초
-  };
-  let timestring = `${time.year}년 ${time.month}월 ${time.date}일 ${time.hours}시 ${time.minutes}분 ${time.seconds}초`;
+  // 쿠키, 상세페이지 정보 받아오기
+  const [cookies] = useCookies("userAuth");
+  const token = cookies.userAuth;
 
+  console.log(data);
+
+  // 경매품 수정
   const queryClient = useQueryClient();
   const mutation = useMutation(updatePost, {
     onSuccess: () => {
@@ -94,6 +50,16 @@ function AuctionDetail() {
       console.log("포스트 수정 완료하였습니다!");
     },
   });
+
+  const showModal = () => setModalOpen(!modalOpen);
+  const showDeleteModal = () => setDeleteModalOpen(!deleteModalOpen);
+
+  // const deleteMutation = useMutation(deletePost, {
+  //   onSuccess: () => {
+  //     queryClient.invalidateQueries("posts");
+  //     console.log("포스트 삭제 완료하였습니다!");
+  //   },
+  // });
 
   // 수정버튼 핸들러
   const updateHandler = async (id) => {
@@ -104,17 +70,26 @@ function AuctionDetail() {
       title: data.title,
       content: contents,
       minPrice: data.minPrice,
-      deadline: timestring,
+      deadline: data.deadline,
       category: data.category,
     });
   };
 
-  const deleteMutation = useMutation(deletePost, {
-    onSuccess: () => {
-      queryClient.invalidateQueries("posts");
-      console.log("포스트 삭제 완료하였습니다!");
-    },
-  });
+  // const deleteHandler = async (id) => {
+  //   deleteMutation.mutate({id, token});
+  //   showDeleteModal();
+  //   return navigate("/auction");
+  // };
+
+  const deleteHandler = async (id) => {
+    await axios.delete(`http://localhost:8080/auction/delete/${id}`, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+    showDeleteModal();
+    navigate("/auction");
+  };
 
   if (isLoading) {
     return <div>Loading...</div>;
@@ -124,31 +99,27 @@ function AuctionDetail() {
     return <div>Error occurred.</div>;
   }
 
-  const deleteHandler = async (id) => {
-    const newFeed = data?.filter((post) => post.id !== id);
-    deleteMutation.mutate({ id, token });
-    return newFeed;
-  };
-
-   // 파람스에 맞는 DB찾기
-   const productsFind = data?.find((item) => item.id == id)
-   console.log(productsFind)
-
   return (
     <Stasd>
       <StLayout>
-        <h1>TITLE :</h1>
+        <h1>TITLE : {data.title}</h1>
         <StTitle>
           <div>
             {/* 수정하는 부분 모달창 구현 */}
-            <Stbutton width onClick={showModal}>
-              {modalOpen ? "닫기" : "수정하기"}
-            </Stbutton>
+            {cookies.hasOwnProperty("userAuth") ? (
+              <Stbutton onClick={showModal}>
+                {modalOpen ? "닫기" : "수정하기"}
+              </Stbutton>
+            ) : (
+              ""
+            )}
           </div>
           {/* 모달창 들어가는 삭제버튼 */}
-          <Stbutton width onClick={showDeleteModal}>
-            삭제하기
-          </Stbutton>
+          {cookies.hasOwnProperty("userAuth") ? (
+            <Stbutton onClick={showDeleteModal}>삭제하기</Stbutton>
+          ) : (
+            ""
+          )}
           {/* !!모달창!! */}
           {deleteModalOpen && (
             <ModalOverlay onClick={showDeleteModal}>
@@ -177,11 +148,8 @@ function AuctionDetail() {
               <p>최신순 리버스 정렬가격</p>
             </StTopPirce>
             <StBidding>
-              <StInput
-                value={comment}
-                onChange={(e) => setComment(e.target.value)}
-              />
-              <Stbutton onClick={commentHandler}>입찰</Stbutton>
+              <StInput />
+              <Stbutton>입찰</Stbutton>
             </StBidding>
           </div>
         </StFlex>
@@ -195,7 +163,7 @@ function AuctionDetail() {
                 onChange={(e) => setContents(e.target.value)}
                 placeholder="수정할 정보 입력"
               />
-              <Stbutton onClick={() => updateHandler(productsFind.id)}>수정!</Stbutton>
+              <Stbutton onClick={() => updateHandler(id)}>수정!</Stbutton>
             </div>
           )}
         </StDescription>
