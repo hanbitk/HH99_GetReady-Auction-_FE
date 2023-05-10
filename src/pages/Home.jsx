@@ -32,7 +32,6 @@ function Home() {
   const token = cookies.userAuth;
   const navigate = useNavigate();
 
-
   const products = useSelector((state) => state.products.products);
 
   // const { isLoading, isError, data } = useQuery("posts", async () => {
@@ -78,17 +77,19 @@ function Home() {
                 padding="8px"
                 backgroundColor="var(--color-dark-blue)"
                 height="40px"
-                onClick={() =>{
-                  if (cookies.hasOwnProperty('userAuth')){
-                    setTimeout(() =>{
-                      navigate('/auction/login')
-                    }, 600)
+                onClick={() => {
+                  if (cookies.userAuth == "undefined" || !cookies.userAuth) {
+                    alert('경매장에 오신걸 환영합니다!')
+                    setTimeout(() => {
+                      navigate("/user/signup");
+                    }, 600);
                   }else{
-                    setTimeout(() =>{
-                      navigate('/user/signup')
-                    }, 600)
+                    setTimeout(() => {
+                      navigate("/auction");
+                    }, 600);
                   }
-                }}>
+                }}
+              >
                 지금 시작하기
               </Button>
             </StContentDescription>
@@ -127,16 +128,16 @@ function Home() {
               padding="8px"
               backgroundColor="var(--color-dark-blue)"
               height="40px"
-              onClick={() =>{
-                if (cookies.hasOwnProperty('userAuth')){
-                  setTimeout(() =>{
-                    navigate('/auction/add')
-                  }, 1000)
-                }else{
-                  alert('로그인이 필요한 페이지입니다.')
-                  setTimeout(() =>{
-                    navigate('/user/login')
-                  }, 500)
+              onClick={() => {
+                if (cookies.userAuth === "undefined" || !cookies.userAuth) {
+                  alert("로그인이 필요한 페이지입니다.");
+                  setTimeout(() => {
+                    navigate("/user/login");
+                  }, 1000);
+                } else {
+                  setTimeout(() => {
+                    navigate("/auction/add");
+                  }, 500);
                 }
               }}
             >
@@ -194,16 +195,16 @@ function Home() {
               padding="8px"
               backgroundColor="var(--color-dark-blue)"
               height="40px"
-              onClick={() =>{
-                if (cookies.hasOwnProperty('userAuth')){
-                  setTimeout(() =>{
-                    navigate('/auction')
-                  }, 500)
-                }else{
-                  alert('로그인이 필요한 페이지입니다.')
-                  setTimeout(() =>{
-                    navigate('/user/login')
-                  }, 500)
+              onClick={() => {
+                if (cookies.userAuth === "undefined" || !cookies.userAuth) {
+                  alert("로그인이 필요한 페이지입니다.");
+                  setTimeout(() => {
+                    navigate("/user/login");
+                  }, 500);
+                } else {
+                  setTimeout(() => {
+                    navigate("/auction");
+                  }, 500);
                 }
               }}
             >

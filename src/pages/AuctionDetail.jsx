@@ -1,7 +1,7 @@
-import React from "react";
-import { useState, useEffect } from "react";
+import React, { useEffect } from "react";
+import { useState } from "react";
 import { useNavigate, useParams } from "react-router-dom/dist";
-import axios from "axios";
+import instance from "../axios/api";
 import {
   StLayout,
   StFlex,
@@ -18,7 +18,7 @@ import {
   ModalContent,
   ModalButton,
 } from "../styles/AuctionDetali.styles";
-import { getPostDetail, updatePost, deletePost } from "../core/api/posts";
+import { getPostDetail, updatePost, biddingPost } from "../core/api/posts";
 import { useQuery, useQueryClient, useMutation } from "react-query";
 import { useCookies } from "react-cookie";
 
@@ -26,22 +26,23 @@ function AuctionDetail() {
   const [contents, setContents] = useState("");
   const [deleteModalOpen, setDeleteModalOpen] = useState(false);
   const [modalOpen, setModalOpen] = useState(false);
-  const { id } = useParams();
-  const [comment, setComment] = useState("");
+  const [biddingPrice, setBiddingPrice] = useState("");
   const navigate = useNavigate();
+  const { id } = useParams();
+  const [startPrice, setStartPrice] = useState("");
+  const [currentPrice, setCurrentPrice] = useState("");
+  const [updatedPrice, setUpdatedPrice] = useState("");
 
   const { isLoading, isError, data } = useQuery("posts", async () => {
     const products = await getPostDetail(id);
     return products.data;
   });
 
-  // 쿠키, 상세페이지 정보 받아오기
+  //==============쿠키================//
   const [cookies] = useCookies("userAuth");
   const token = cookies.userAuth;
 
-  console.log(data);
-
-  // 경매품 수정
+  //==============경매품 수정================//
   const queryClient = useQueryClient();
   const mutation = useMutation(updatePost, {
     onSuccess: () => {
@@ -54,14 +55,7 @@ function AuctionDetail() {
   const showModal = () => setModalOpen(!modalOpen);
   const showDeleteModal = () => setDeleteModalOpen(!deleteModalOpen);
 
-  // const deleteMutation = useMutation(deletePost, {
-  //   onSuccess: () => {
-  //     queryClient.invalidateQueries("posts");
-  //     console.log("포스트 삭제 완료하였습니다!");
-  //   },
-  // });
-
-  // 수정버튼 핸들러
+  //==============수정 버튼================//
   const updateHandler = async (id) => {
     if (!contents) return alert("Changes cannot be in blank!");
     mutation.mutate({
@@ -75,14 +69,9 @@ function AuctionDetail() {
     });
   };
 
-  // const deleteHandler = async (id) => {
-  //   deleteMutation.mutate({id, token});
-  //   showDeleteModal();
-  //   return navigate("/auction");
-  // };
-
+  //==============삭제 버튼================//
   const deleteHandler = async (id) => {
-    await axios.delete(`http://localhost:8080/auction/delete/${id}`, {
+    await instance.delete(`/auction/delete/${id}`, {
       headers: {
         Authorization: `Bearer ${token}`,
       },
@@ -91,34 +80,70 @@ function AuctionDetail() {
     navigate("/auction");
   };
 
-  if (isLoading) {
-    return <div>Loading...</div>;
-  }
+  //==============입찰 버튼================//
 
-  if (isError) {
-    return <div>Error occurred.</div>;
-  }
+  // const mutationBidding = useMutation(biddingPost, {
+  //   async onSuccess(data){
+  //     console.log(data)
+  //     queryClient.invalidateQueries("posts");
+  //     setBiddingPrice(biddingPrice);
+  //     console.log("입찰 완료!");
+  //   },
+  // });
+
+  // const biddingPriceHandler = async (id) => {
+  //   if (cookies.userAuth == "undefined" || !cookies.userAuth) {
+  //     alert("로그인이 필요한 페이지입니다.");
+  //     setTimeout(() => {
+  //       navigate("/user/login");
+  //     }, 1000);
+  //   } else {
+  //     mutationBidding.mutate({
+  //       id: +id,
+  //       token: token,
+  //       price: biddingPrice,
+  //     });
+  //   }
+  // };
+
+  const biddingPriceHandler = async () => {
+    await instance.post(
+      `/bid/add/${id}`,
+      {
+        price: biddingPrice,
+      },
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    );
+    setBiddingPrice(biddingPrice)
+  };
+
+  const allBidList = data?.allBidList;
+  const bidList = allBidList?.map((item) => item.price);
 
   return (
     <Stasd>
       <StLayout>
-        <h1>TITLE : {data.title}</h1>
+        <h1>TITLE : {data?.title}</h1>
         <StTitle>
           <div>
             {/* 수정하는 부분 모달창 구현 */}
-            {cookies.hasOwnProperty("userAuth") ? (
+            {cookies.userAuth == "undefined" || !cookies.userAuth ? (
+              ""
+            ) : (
               <Stbutton onClick={showModal}>
                 {modalOpen ? "닫기" : "수정하기"}
               </Stbutton>
-            ) : (
-              ""
             )}
           </div>
           {/* 모달창 들어가는 삭제버튼 */}
-          {cookies.hasOwnProperty("userAuth") ? (
-            <Stbutton onClick={showDeleteModal}>삭제하기</Stbutton>
-          ) : (
+          {cookies.userAuth == "undefined" || !cookies.userAuth ? (
             ""
+          ) : (
+            <Stbutton onClick={showDeleteModal}>삭제하기</Stbutton>
           )}
           {/* !!모달창!! */}
           {deleteModalOpen && (
@@ -136,20 +161,23 @@ function AuctionDetail() {
           <StPicture>사진공간</StPicture>
           <div>
             <StTopPirce>
-              <p>top1 price</p>
-              <p>top2 price</p>
-              <p>top3 price</p>
+              시작가격 ; {data?.minPrice}
+              <br />
+              현재가격 ; {data?.currentPrice}
+              <br />
             </StTopPirce>
             <StTopPirce>
-              <p>최신순 리버스 정렬가격</p>
-              <p>최신순 리버스 정렬가격</p>
-              <p>최신순 리버스 정렬가격</p>
-              <p>최신순 리버스 정렬가격</p>
-              <p>최신순 리버스 정렬가격</p>
+              최신 가격
+              {bidList?.map((item) => {
+                return <div key={item.id}>{item}원!</div>;
+              })}
             </StTopPirce>
             <StBidding>
-              <StInput />
-              <Stbutton>입찰</Stbutton>
+              <StInput
+                value={biddingPrice}
+                onChange={(e) => setBiddingPrice(e.target.value)}
+              />
+              <Stbutton onClick={() => biddingPriceHandler(id)}>입찰</Stbutton>
             </StBidding>
           </div>
         </StFlex>

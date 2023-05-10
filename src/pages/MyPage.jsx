@@ -21,7 +21,14 @@ function MyPage() {
 
   return (
     <Section>
-      {cookies.hasOwnProperty("userAuth") ? (
+      {cookies.userAuth == "undefined" || !cookies.userAuth ? (
+        (() => {
+          setTimeout(() => {
+            alert("로그인 후 확인 가능한 페이지입니다.");
+            navigate("/user/login");
+          }, 500);
+        })()
+      ) : (
         <SectionMyPage>
           <h1 style={{ marginBottom: "10px" }}>My Page</h1>
           <StMyPageButtons>
@@ -59,13 +66,6 @@ function MyPage() {
             })}
           </StMyPageArticle>
         </SectionMyPage>
-      ) : (
-        (() => {
-          setTimeout(() => {
-            alert("로그인 후 확인 가능한 페이지입니다.");
-            navigate("/user/login");
-          }, 500);
-        })()
       )}
     </Section>
   );

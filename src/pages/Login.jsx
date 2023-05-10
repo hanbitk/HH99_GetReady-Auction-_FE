@@ -44,7 +44,7 @@ function Login() {
       setCookie("userAuth", token, { path: "/", expires: expireTime });
       setTimeout(() => {
         navigate("/");
-      }, 1000);
+      }, 600);
     },
   });
 

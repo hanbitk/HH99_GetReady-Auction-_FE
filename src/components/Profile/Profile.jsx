@@ -8,8 +8,6 @@ import Button from "../Buttons/Button";
 import { useNavigate } from "react-router-dom";
 import { AiOutlineUser } from "react-icons/ai";
 import { useCookies } from "react-cookie";
-import instance from "../../axios/api";
-import { useState } from "react";
 
 function Profile() {
   const [cookies, removeCookie] = useCookies("userAuth");

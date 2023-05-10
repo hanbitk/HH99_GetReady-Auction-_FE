@@ -6,10 +6,10 @@ export const StSectionContainer = styled.div`
 `;
 
 export const StSection = styled.div`
-  max-width: 1280px;
+  max-width: 1300px;
   height: 100%;
   margin: 0 auto;
-  padding: 40px;
+  padding: 30px;
   display: flex;
   align-items: center;
 `;

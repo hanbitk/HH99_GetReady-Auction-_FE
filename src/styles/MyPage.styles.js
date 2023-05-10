@@ -25,7 +25,6 @@ export const SectionMyPage = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  /* align-items: center;*/
   width: 100%;
 `;
 
@@ -120,3 +119,10 @@ export const StBackgroundImage = styled.div`
   width: 50px;
   height: 50px;
 `;
+export const StSearchBar = styled.div`
+  border: 1px solid pink;
+  border-radius: 4px;
+  width: 350px;
+  padding: 10px;
+
+`
