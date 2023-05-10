@@ -16,16 +16,17 @@ import { useSelector } from "react-redux";
 function Header() {
   const navigate = useNavigate();
   const [cookies] = useCookies("userAuth");
-  const [isLogged, setLogged] = useState("로그인");
 
-  useEffect(() => {
-    const userAuth = cookies.userAuth;
-    if (userAuth) {
-      console.log("로그인한 유저가 있습니다");
-    } else {
-      return console.log("로그인한 유저가 없습니다");
-    }
-  }, []);
+  // useEffect(() => {
+  //   const userAuth = cookies.userAuth;
+  //   if (userAuth) {
+  //     console.log("로그인한 유저가 있습니다");
+  //   } else {
+  //     return console.log("로그인한 유저가 없습니다");
+  //   }
+  // }, []);
+
+  // if (cookies.hasOwnProperty("userAuth")) return setLogged(true)
 
   return (
     <StHeaderContainer>
@@ -47,9 +48,8 @@ function Header() {
             fontWeight="var(--weight-semi-bold)"
           />
         </div>
-        {cookies.hasOwnProperty("userAuth") ? (
-          <Profile />
-        ) : (
+        {/* cookies.hasOwnProperty("userAuth") */}
+        {cookies.userAuth === "undefined" || !cookies.userAuth ? (
           <Button
             size="var(--size-small)"
             fontSize="var(--font-regular)"
@@ -58,6 +58,8 @@ function Header() {
           >
             로그인
           </Button>
+        ) : (
+          <Profile />
         )}
       </StHeader>
     </StHeaderContainer>

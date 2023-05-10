@@ -13,7 +13,6 @@ import { useState } from "react";
 
 function Profile() {
   const [cookies, removeCookie] = useCookies("userAuth");
-  const [isLoggedIn, setIsLoggedIn] = useState(Boolean(cookies.userAuth));
   const token = cookies.userAuth;
 
   const navigate = useNavigate();
@@ -22,8 +21,6 @@ function Profile() {
     try {
       // 쿠키 삭제
       removeCookie("userAuth");
-
-      setIsLoggedIn(false);
 
       // 홈페이지로 리다이렉트
       setTimeout(() =>{
