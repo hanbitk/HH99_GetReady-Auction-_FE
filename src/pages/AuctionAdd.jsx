@@ -2,18 +2,20 @@ import React from "react";
 import { useNavigate } from "react-router-dom/dist";
 import { useState, useEffect } from "react";
 import Button from "../components/Buttons/Button";
-import Header from "../components/Header/Header";
-import axios from "axios";
-import api from "../axios/api";
 import {
-  StPicture,
-  StFlex,
-  StLayout,
+  StContainer,
+  StForm,
+  StImgSection,
+  StFormSection,
+  StFormInputs,
   StInput,
-  Stbutton,
+  Stbutton123,
+  DropdownList
 } from "../styles/AuctionAdd.styles";
 import instance from "../axios/api";
 import { useCookies } from "react-cookie";
+import Section from "../components/Section/Section";
+import { useRef } from "react";
 
 function AuctionAdd() {
   let today = new Date(); // today 객체에 Date()의 결과를 넣어줬다
@@ -26,6 +28,40 @@ function AuctionAdd() {
     seconds: today.getSeconds().toString().padStart(2, "0"), // 현재 초
   };
   let timestring = `${time.year}년 ${time.month}월 ${time.date}일 ${time.hours}시 ${time.minutes}분 ${time.seconds}초`;
+  //새로 넣은 드롭다운
+  const [isOpen, setIsOpen] = useState(false);
+  const [selectedItem, setSelectedItem] = useState("카테고리");
+  const menuRef = useRef("");
+
+  // useEffect(() => {
+  //   function handleClickOutside(event) {
+  //     if (!menuRef.current.contains(event.target)) {
+  //       setIsOpen(false);
+  //     }
+  //   }
+  //   document.addEventListener("click", handleClickOutside);
+  //   return () => {
+  //     document.removeEventListener("click", handleClickOutside);
+  //   };
+  // }, [menuRef]);
+  // // and an outside browser click handle
+  // useEffect(() => {
+  //   const handleWindowBlur = () => {
+  //     setIsOpen(false);
+  //   };
+  //   window.addEventListener("blur", handleWindowBlur);
+  //   return () => {
+  //     window.removeEventListener("blur", handleWindowBlur);
+  //   };
+  // }, []);
+  //드롭다운 클릭시 카테고리 변경
+  const itemClickHandler = (item) => {
+    setProduct({
+      ...product,
+      category: item,
+    });
+    setIsOpen(false);
+  };
 
   //이동
   const nav = useNavigate();
@@ -46,18 +82,10 @@ function AuctionAdd() {
     const { name, value } = e.target;
     setProduct({ ...product, [name]: value });
   };
-  //db에서 가져온 정보
-//   const fetchTodos = async () => {
-//     const { data } = await axios.get("/todos");
-//     setProducts(data);
-//   };
-  useEffect(() => {
-    //db로부터 값을 가져올 것이다.
-  }, []);
 
   const [cookies] = useCookies("userAuth");
   const token = cookies.userAuth;
-  
+
   //상품 등록 버튼
   const productAddButton = async () => {
     if (
@@ -67,9 +95,9 @@ function AuctionAdd() {
       product.deadline.trim() === "" ||
       product.category.trim() === ""
     )
-      return alert("no");
-    await axios.post(
-      "http://localhost:8080/auction/add",
+      // return alert("no");
+    await instance.post(
+      "/auction/add",
       {
         ...product,
         title: product.title,
@@ -95,74 +123,101 @@ function AuctionAdd() {
   };
 
   return (
-    <>
-      <StLayout>
-        <StFlex>
-          <StPicture>
-            <div>사진 들어가는 구역</div>
-          </StPicture>
-          <div>
-            <div>
-              카테고리:{" "}
-              <StInput
-                type="text"
-                name="category"
-                value={product.category}
-                onChange={productHandler}
-              />
-              <br />
-              <br />
-              글제목:{" "}
-              <StInput
-                type="text"
-                name="title"
-                value={product.title}
-                onChange={productHandler}
-              />
-              <br />
-              <br />
-              경매기간:{" "}
-              <StInput
-                type="text"
-                name="deadline"
-                value={product.deadline}
-                onChange={productHandler}
-              />
-              <br />
-              <br />
-              최저가:{" "}
-              <StInput
-                type="text"
-                name="minPrice"
-                value={product.minPrice}
-                onChange={productHandler}
-              />
-              <br />
-              <br />
-              제품 소개:{" "}
-              <StInput
-                height="true"
-                type="text"
-                name="content"
-                value={product.content}
-                onChange={productHandler}
-              />
-              <br />
-              <br />
-            </div>
-          </div>
-        </StFlex>
-        <Stbutton>
-          <Button
-            height="60px"
-            size="var(--size-extra-large)"
-            onClick={productAddButton}
-          >
-            제품등록 버튼
-          </Button>
-        </Stbutton>
-      </StLayout>
-    </>
+    <Section 
+    // ref={menuRef}
+    >
+      <StContainer display="flex">
+        <StForm
+          onSubmit={(e) => {
+            e.preventDefault();
+            productAddButton();
+          }}
+        >
+          {/* Add Image Upload Field - TBD */}
+          <StImgSection>
+            <img src="https://hips.hearstapps.com/hmg-prod/images/pringles-template-lightlysalted-1546635619.jpg?crop=1xw:1xh;center,top&resize=980:*"/>
+          </StImgSection>
+
+          <StFormSection>
+            {/* Add Title Input */}
+            <StFormInputs>
+              <div>
+                <div onClick={() => setIsOpen(!isOpen)}>
+                  {selectedItem}
+                </div>
+                {isOpen && (
+                  <DropdownList>
+                    <Stbutton123 onClick={() => itemClickHandler("가구/인테리어")}>
+                      가구/인테리어
+                    </Stbutton123>
+                    <Stbutton123 onClick={() => itemClickHandler("패션의류/잡화")}>
+                      패션의류/잡화
+                    </Stbutton123>
+                    <Stbutton123 onClick={() => itemClickHandler("전자제품")}>
+                      전자제품
+                    </Stbutton123>
+                    <Stbutton123 onClick={() => itemClickHandler("스포츠/레저")}>
+                      스포츠/레저
+                    </Stbutton123>
+                    <Stbutton123 onClick={() => itemClickHandler("기타")}>
+                      기타
+                    </Stbutton123>
+                  </DropdownList>
+                )}
+              </div>
+              <div>
+                <StInput
+                  type="text"
+                  name="category"
+                  value={product.category}
+                  onChange={productHandler}
+                />
+              </div>
+              <div>
+                <h4>제목</h4>
+                <StInput
+                  type="text"
+                  name="title"
+                  value={product.title}
+                  onChange={productHandler}
+                />
+              </div>
+              <div>
+                <h4>경매기간</h4>
+                <StInput
+                  type="text"
+                  name="deadline"
+                  value={product.deadline}
+                  onChange={productHandler}
+                />
+              </div>
+              <div>
+                <h4>최저가</h4>
+                <StInput
+                  type="text"
+                  name="minPrice"
+                  value={product.minPrice}
+                  onChange={productHandler}
+                />
+              </div>
+              <div>
+                <h4>제품소개</h4>
+                <StInput
+                  type="text"
+                  name="content"
+                  value={product.content}
+                  onChange={productHandler}
+                />
+              </div>
+            </StFormInputs>
+
+            <Button size="400px" height="50px">
+              제품등록 버튼
+            </Button>
+          </StFormSection>
+        </StForm>
+      </StContainer>
+    </Section>
   );
 }
 

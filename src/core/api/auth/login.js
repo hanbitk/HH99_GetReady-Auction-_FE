@@ -7,6 +7,7 @@ const login = async (users) => {
     const accessToken = response.headers.get("authorization");
     const token = accessToken.split(" ")[1];
     const loginSuccess = response.data.message;
+    alert(response.data.message)
     return { token, loginSuccess };
   } catch (error) {
     console.error(error);

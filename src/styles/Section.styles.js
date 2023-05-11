@@ -6,10 +6,10 @@ export const StSectionContainer = styled.div`
 `;
 
 export const StSection = styled.div`
-  max-width: 1280px;
+  max-width: 1300px;
   height: 100%;
   margin: 0 auto;
-  padding: 40px;
+  padding: 30px;
   display: flex;
   align-items: center;
 `;
@@ -51,16 +51,25 @@ export const StDescription = styled.p`
 export const StContentDescription = styled.div``;
 
 export const ContentImagebox = styled.div`
-  border: 1px solid black;
   width: 50%;
   height: 500px;
+
+  img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 10px;
+    &:hover{
+      transform: translateX(3px)
+    }
+  }
 `;
 
 // ======================== //
 
 // Section About
 
-export const SectionAbout = styled.div` 
+export const SectionAbout = styled.div`
   display: flex;
   flex-direction: row;
   justify-content: space-around;
@@ -83,9 +92,15 @@ export const StAboutTitle = styled.h1`
 `;
 
 export const AboutImageBox = styled.div`
-  border: 1px solid black;
   width: 30%;
   height: 400px;
+
+  img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 10px;
+  }
 `;
 // ======================== //
 
@@ -136,14 +151,14 @@ export const Deadline = styled.p`
   background-color: var(--color-red);
   top: 5%;
   left: 75%;
-`
+`;
 
 export const ProductsBox = styled.div`
   cursor: pointer;
-  &:hover{
+  &:hover {
     transform: translateY(3px);
-    transition: .5s;
-    }
-`
+    transition: 0.5s;
+  }
+`;
 
 // ======================== //
