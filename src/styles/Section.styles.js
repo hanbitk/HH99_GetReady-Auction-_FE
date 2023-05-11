@@ -2,7 +2,6 @@ import styled from "styled-components";
 
 // Section Component
 export const StSectionContainer = styled.div`
-  border: 1px solid green;
   background-color: ${(props) => props.backgroundColor || "#cad5e3"};
 `;
 
@@ -52,9 +51,18 @@ export const StDescription = styled.p`
 export const StContentDescription = styled.div``;
 
 export const ContentImagebox = styled.div`
-  border: 1px solid black;
   width: 50%;
   height: 500px;
+
+  img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 10px;
+    &:hover{
+      transform: translateX(3px)
+    }
+  }
 `;
 
 // ======================== //
@@ -84,9 +92,15 @@ export const StAboutTitle = styled.h1`
 `;
 
 export const AboutImageBox = styled.div`
-  border: 1px solid black;
   width: 30%;
   height: 400px;
+
+  img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 10px;
+  }
 `;
 // ======================== //
 

@@ -90,7 +90,9 @@ function Home() {
               </Button>
             </StContentDescription>
           </StContent>
-          <ContentImagebox>이미지</ContentImagebox>
+          <ContentImagebox>
+          <img src="https://fox2now.com/wp-content/uploads/sites/14/2022/06/GettyImages-1195327712.jpg?w=1280&h=720&crop=1"/>
+          </ContentImagebox>
         </SectionContent>
       </Section>
 
@@ -99,7 +101,9 @@ function Home() {
       {/* About 1 */}
       <Section backgroundColor="var(--color-gray)">
         <SectionAbout>
-          <AboutImageBox>이미지</AboutImageBox>
+          <AboutImageBox>
+            <img src="https://geauction.com/wp-content/uploads/2018/06/Your-First-Auction-What-You-Need-to-Know.jpg"/>
+          </AboutImageBox>
           <StAbout>
             <StAboutTitle
               style={{ color: "var(--color-blue)", marginBottom: "20px" }}
@@ -207,7 +211,9 @@ function Home() {
               입찰하기
             </Button>
           </StAbout>
-          <AboutImageBox>이미지</AboutImageBox>
+          <AboutImageBox>
+            <img src="https://news.artnet.com/app/news-upload/2017/11/GettyImages-50947488-1024x687.jpg"/>
+          </AboutImageBox>
         </SectionAbout>
       </Section>
 

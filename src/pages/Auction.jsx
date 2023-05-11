@@ -60,7 +60,87 @@ function Auction() {
       console.error(error);
     }
   };
-
+  
+  //이동 - 가전/인테리어
+  const category1 = async () => {
+    try {
+      const response = await instance.get("/auction/category", {
+        params: {
+          page: 0,
+          size: 6,
+          category: "가구/인테리어",
+        },
+      });
+      setSearchResult(response.data.data);
+    } catch (error) {
+      console.error(error);
+    }
+    // setIsOpen(!isOpen);
+  };
+  //이동 - 가전/인테리어
+  const category2 = async () => {
+    try {
+      const response = await instance.get("/auction/category", {
+        params: {
+          page: 0,
+          size: 6,
+          category: "패션의류/잡화",
+        },
+      });
+      setSearchResult(response.data.data);
+    } catch (error) {
+      console.error(error);
+    }
+    // setIsOpen(!isOpen);
+  };
+  //이동 - 가전/인테리어
+  const category3 = async () => {
+    try {
+      const response = await instance.get("/auction/category", {
+        params: {
+          page: 0,
+          size: 6,
+          category: "전자제품",
+        },
+      });
+      setSearchResult(response.data.data);
+    } catch (error) {
+      console.error(error);
+    }
+    // setIsOpen(!isOpen);
+  };
+  //이동 - 가전/인테리어
+  const category4 = async () => {
+    try {
+      const response = await instance.get("/auction/category", {
+        params: {
+          page: 0,
+          size: 6,
+          category: "스포츠/레저",
+        },
+      });
+      setSearchResult(response.data.data);
+    } catch (error) {
+      console.error(error);
+    }
+    // setIsOpen(!isOpen);
+  };
+  //이동 - 가전/인테리어
+  const category5 = async () => {
+    try {
+      const response = await instance.get("/auction/category", {
+        params: {
+          page: 0,
+          size: 6,
+          category: "기타",
+        },
+      });
+      setSearchResult(response.data.data);
+    } catch (error) {
+      console.error(error);
+    }
+    // setIsOpen(!isOpen);
+  };
   return (
     <Section>
       {/* {page} */}
@@ -70,11 +150,21 @@ function Auction() {
           <h1 style={{ marginBottom: "10px" }}>카테고리</h1>
           <StAuctionCategory>
             <ul>
-              <li>가구/인테리어</li>
-              <li>패션의류/잡화</li>
-              <li>전자제품</li>
-              <li>스포츠/레저</li>
-              <li>기타</li>
+              <div onClick={category1}>
+                <li>가구/인테리어</li>
+              </div>
+              <div onClick={category2}>
+                <li>패션의류/잡화</li>
+              </div>
+              <div onClick={category3}>
+                <li>전자제품</li>
+              </div>
+              <div onClick={category4}>
+                <li>스포츠/레저</li>
+              </div>
+              <div onClick={category5}>
+                <li>기타</li>
+              </div>
             </ul>
             <Button
               size="220px"

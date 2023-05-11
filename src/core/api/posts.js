@@ -19,7 +19,7 @@ const getPosts = async (page) => {
   console.log(page)
   try {
     const response = await instance.get(
-      `/auction?page=${page}&size=6`,
+      `/auction?page=0&size=6`,
     );
     return response.data.data;
   } catch (err) {
@@ -30,7 +30,7 @@ const getPosts = async (page) => {
 const getHotPosts = async () => {
   try {
     const response = await instance.get(
-      `/main?page=0&size=4`,
+      `/main?page=0&size=3`,
     );
     return response.data.data;
   } catch (err) {

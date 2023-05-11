@@ -62,7 +62,7 @@ export const StSearchInput = styled.input`
 export const StProductContainer = styled.div`
   display: flex;
   flex-direction: row;
-  gap: 15px 92px;
+  gap: 15px 80px;
   /* justify-content: space-between; */
   flex-wrap: wrap;
 `;
