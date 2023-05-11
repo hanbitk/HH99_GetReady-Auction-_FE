@@ -15,8 +15,7 @@ import useToken from "../../hooks/useToken";
 // };
 
 // 전체 경매품 조회
-const getPosts = async (page) => {
-  console.log(page)
+const getPosts = async () => {
   try {
     const response = await instance.get(
       `/auction?page=0&size=6`,
