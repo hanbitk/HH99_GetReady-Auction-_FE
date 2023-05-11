@@ -141,6 +141,7 @@ function AuctionDetail() {
       }
     );
     setBiddingPrice(biddingPrice);
+    alert('입찰 완료되었습니다!')
   };
 
   const allBidList = data?.allBidList;

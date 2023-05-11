@@ -33,7 +33,7 @@ function Home() {
   const token = cookies.userAuth;
   const navigate = useNavigate();
 
-  const products = useSelector((state) => state.products.products);
+  // const products = useSelector((state) => state.products.products);
 
   const { isLoading, isError, data } = useQuery("posts", getHotPosts)
 

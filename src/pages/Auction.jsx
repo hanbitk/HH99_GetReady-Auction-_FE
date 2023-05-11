@@ -27,9 +27,7 @@ function Auction() {
   const [searchResult, setSearchResult] = useState(null);
   const navigate = useNavigate();
 
-  const { isLoading, isError, data } = useQuery("posts", async () =>
-    getPosts(page)
-  );
+  const { isLoading, isError, data } = useQuery("posts", getPosts);
 
   console.log(data);
 
@@ -60,7 +58,7 @@ function Auction() {
       console.error(error);
     }
   };
-  
+
   //이동 - 가전/인테리어
   const category1 = async () => {
     try {
