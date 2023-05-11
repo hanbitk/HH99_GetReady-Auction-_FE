@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import Section from "../components/Section/Section";
 import Button from "../components/Buttons/Button";
 import {
@@ -22,14 +22,28 @@ import {
   Deadline,
 } from "../styles/Section.styles";
 import { useNavigate } from "react-router-dom";
-import { useSelector } from "react-redux";
 import { useCookies } from "react-cookie";
+import { useQuery } from "react-query";
+import { useSelector } from "react-redux";
+import instance from "../axios/api";
+import { getHotPosts } from "../core/api/posts";
 
 function Home() {
-  const [cookies] = useCookies('userAuth');
+  const [cookies] = useCookies("userAuth");
+  const token = cookies.userAuth;
   const navigate = useNavigate();
 
   const products = useSelector((state) => state.products.products);
+
+  const { isLoading, isError, data } = useQuery("posts", getHotPosts)
+
+  if (isLoading) {
+    return <div>Loading...</div>;
+  }
+
+  if (isError) {
+    return <div>Error occurred.</div>;
+  }
 
   return (
     <>
@@ -59,13 +73,26 @@ function Home() {
                 padding="8px"
                 backgroundColor="var(--color-dark-blue)"
                 height="40px"
-                onClick={() => navigate("/user/login")}
+                onClick={() => {
+                  if (cookies.userAuth == "undefined" || !cookies.userAuth) {
+                    alert("경매장에 오신걸 환영합니다!");
+                    setTimeout(() => {
+                      navigate("/user/signup");
+                    }, 600);
+                  } else {
+                    setTimeout(() => {
+                      navigate("/auction");
+                    }, 600);
+                  }
+                }}
               >
                 지금 시작하기
               </Button>
             </StContentDescription>
           </StContent>
-          <ContentImagebox>이미지</ContentImagebox>
+          <ContentImagebox>
+          <img src="https://fox2now.com/wp-content/uploads/sites/14/2022/06/GettyImages-1195327712.jpg?w=1280&h=720&crop=1"/>
+          </ContentImagebox>
         </SectionContent>
       </Section>
 
@@ -74,7 +101,9 @@ function Home() {
       {/* About 1 */}
       <Section backgroundColor="var(--color-gray)">
         <SectionAbout>
-          <AboutImageBox>이미지</AboutImageBox>
+          <AboutImageBox>
+            <img src="https://geauction.com/wp-content/uploads/2018/06/Your-First-Auction-What-You-Need-to-Know.jpg"/>
+          </AboutImageBox>
           <StAbout>
             <StAboutTitle
               style={{ color: "var(--color-blue)", marginBottom: "20px" }}
@@ -99,7 +128,18 @@ function Home() {
               padding="8px"
               backgroundColor="var(--color-dark-blue)"
               height="40px"
-              onClick={() => navigate("/auction/add")}
+              onClick={() => {
+                if (cookies.userAuth === "undefined" || !cookies.userAuth) {
+                  alert("로그인이 필요한 페이지입니다.");
+                  setTimeout(() => {
+                    navigate("/user/login");
+                  }, 1000);
+                } else {
+                  setTimeout(() => {
+                    navigate("/auction/add");
+                  }, 500);
+                }
+              }}
             >
               경매 등록
             </Button>
@@ -155,12 +195,25 @@ function Home() {
               padding="8px"
               backgroundColor="var(--color-dark-blue)"
               height="40px"
-              onClick={() => navigate("/auction")}
+              onClick={() => {
+                if (cookies.userAuth === "undefined" || !cookies.userAuth) {
+                  alert("로그인이 필요한 페이지입니다.");
+                  setTimeout(() => {
+                    navigate("/user/login");
+                  }, 500);
+                } else {
+                  setTimeout(() => {
+                    navigate("/auction");
+                  }, 500);
+                }
+              }}
             >
               입찰하기
             </Button>
           </StAbout>
-          <AboutImageBox>이미지</AboutImageBox>
+          <AboutImageBox>
+            <img src="https://news.artnet.com/app/news-upload/2017/11/GettyImages-50947488-1024x687.jpg"/>
+          </AboutImageBox>
         </SectionAbout>
       </Section>
 
@@ -177,9 +230,12 @@ function Home() {
             </StDescription>
           </StHotListDescription>
           <StHotListBox>
-            {products.map((product) => {
+            {data?.map((product) => {
               return (
-                <ProductsBox key={product.id} onClick={() => navigate("/auction")}>
+                <ProductsBox
+                  key={product.id}
+                  onClick={() => navigate("/auction")}
+                >
                   <Deadline>{product.deadline}</Deadline>
                   <StHotListImg src="https://hips.hearstapps.com/hmg-prod/images/pringles-template-lightlysalted-1546635619.jpg?crop=1xw:1xh;center,top&resize=980:*" />
                   <h4>{product.title}</h4>

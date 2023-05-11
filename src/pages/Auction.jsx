@@ -1,121 +1,265 @@
-import React from 'react'
-import { useNavigate, Link } from 'react-router-dom/dist'
-import Button from '../components/Buttons/Button'
-import Header from '../components/Header/Header'
-import { useRef, useState, useEffect } from 'react'
-// import axios from 'axios'
-import api from "../axios/api"
+import React from "react";
+import { useNavigate } from "react-router-dom/dist";
+import Button from "../components/Buttons/Button";
+import { useState } from "react";
+import { useQuery } from "react-query";
+import { getPosts } from "../core/api/posts";
+import Pagination from "@mui/material/Pagination";
+import Stack from "@mui/material/Stack";
+import instance from "../axios/api";
+import Section from "../components/Section/Section";
 import {
-    StFlex,
-    StLayout,
-    StDropdownList,
-    StMyPage,
-    StItem,
-    StPicture,
-    StItems,
-    StBackgroundImage
-} from '../styles/MyPage.styles'
+  StAuctionAside,
+  StAuctionCategory,
+  StProductsContainer,
+  StProductSearch,
+  StSearchInput,
+  StProductContainer,
+  StProductBoxAuction,
+  StProductImg,
+} from "../styles/Auction.styles";
+import { useCookies } from "react-cookie";
+import { SectionAuction } from "../styles/Auction.styles";
 function Auction() {
-    //이동
-    const nav = useNavigate()
-    //이동 - 내경매조회
-    const MypageAuctionGo = () => {
-        nav("/MyPage")
-        setIsOpen(!isOpen)
-    }
-    //이동 - 내입찰조회
-    const MypageBiddingnGo = () => {
-        nav("/mypage/bidding")
-    }
-    //드롭다운 온오프
-    const [isOpen, setIsOpen] = useState(false)
-    //드롭다운 촤라락
-    const [selectedItem, setSelectedItem] = useState("마이 페이지");
-    //드롭다운 외 클릭시 다운
-    const allRef = useRef("");
-    useEffect(() => {
-        function handleClickOutside(event) {
-            if (!allRef.current.contains(event.target)) {
-                setIsOpen(false);
-            }
-        }
-        document.addEventListener("click", handleClickOutside);
-        return () => {
-            document.removeEventListener("click", handleClickOutside);
-        };
-    }, [allRef]);
-    // and an outside browser click handle
-    useEffect(() => {
-        const handleWindowBlur = () => {
-            setIsOpen(false);
-        };
-        window.addEventListener("blur", handleWindowBlur);
-        return () => {
-            window.removeEventListener("blur", handleWindowBlur);
-        };
-    }, []);
+  const [cookies] = useCookies();
+  const [page, setPage] = React.useState(0);
+  const [search, setSearch] = useState("");
+  const [searchResult, setSearchResult] = useState(null);
+  const navigate = useNavigate();
 
-    //상품 정보와 담는곳
-    const [products, setProducts] = useState()
-    const [product, setProduct] = useState({
-        title: "",
-        content: "",
-        minPrice: "",
-        deadline: "",
-        category: ""
-    })
-    //상품 핸들러
-    const productHandler = (e) => {
-        const { name, value } = e.target
-        setProduct({ ...product, [name]: value })
+  const { isLoading, isError, data } = useQuery("posts", async () =>
+    getPosts(page)
+  );
+
+  console.log(data);
+
+  const handleChange = (event, value) => {
+    setPage(value);
+  };
+
+  if (isLoading) {
+    return <div>Loading...</div>;
+  }
+
+  if (isError) {
+    return <div>Error occurred.</div>;
+  }
+
+  //검색버튼 핸들러
+  const searchHandler = async () => {
+    try {
+      const response = await instance.get("/auction/search", {
+        params: {
+          page: page,
+          size: 6,
+          search: search,
+        },
+      });
+      setSearchResult(response.data.data);
+    } catch (error) {
+      console.error(error);
     }
-    //db에서 가져온 정보
-    const fetchTodos = async () => {
-        const { data } = await api.get(
-            "/todos"
-        );
-        setProducts(data)
+  };
+  
+  //이동 - 가전/인테리어
+  const category1 = async () => {
+    try {
+      const response = await instance.get("/auction/category", {
+        params: {
+          page: 0,
+          size: 6,
+          category: "가구/인테리어",
+        },
+      });
+      setSearchResult(response.data.data);
+    } catch (error) {
+      console.error(error);
     }
-    useEffect(() => {
-        //db로부터 값을 가져올 것이다.
-        fetchTodos();
-    }, [])
-    return (
-        <div ref={allRef}>
-            <StLayout ref={allRef}>
-                <StFlex ref={allRef}>
-                    <StMyPage>
-                        <div onClick={() => setIsOpen(!isOpen)}><h2>
-                            {selectedItem}</h2>
+    // setIsOpen(!isOpen);
+  };
+  //이동 - 가전/인테리어
+  const category2 = async () => {
+    try {
+      const response = await instance.get("/auction/category", {
+        params: {
+          page: 0,
+          size: 6,
+          category: "패션의류/잡화",
+        },
+      });
+      setSearchResult(response.data.data);
+    } catch (error) {
+      console.error(error);
+    }
+    // setIsOpen(!isOpen);
+  };
+  //이동 - 가전/인테리어
+  const category3 = async () => {
+    try {
+      const response = await instance.get("/auction/category", {
+        params: {
+          page: 0,
+          size: 6,
+          category: "전자제품",
+        },
+      });
+      setSearchResult(response.data.data);
+    } catch (error) {
+      console.error(error);
+    }
+    // setIsOpen(!isOpen);
+  };
+  //이동 - 가전/인테리어
+  const category4 = async () => {
+    try {
+      const response = await instance.get("/auction/category", {
+        params: {
+          page: 0,
+          size: 6,
+          category: "스포츠/레저",
+        },
+      });
+      setSearchResult(response.data.data);
+    } catch (error) {
+      console.error(error);
+    }
+    // setIsOpen(!isOpen);
+  };
+  //이동 - 가전/인테리어
+  const category5 = async () => {
+    try {
+      const response = await instance.get("/auction/category", {
+        params: {
+          page: 0,
+          size: 6,
+          category: "기타",
+        },
+      });
+      setSearchResult(response.data.data);
+    } catch (error) {
+      console.error(error);
+    }
+    // setIsOpen(!isOpen);
+  };
+  return (
+    <Section>
+      {/* {page} */}
+      <SectionAuction>
+        {/* Aside */}
+        <StAuctionAside>
+          <h1 style={{ marginBottom: "10px" }}>카테고리</h1>
+          <StAuctionCategory>
+            <ul>
+              <div onClick={category1}>
+                <li>가구/인테리어</li>
+              </div>
+              <div onClick={category2}>
+                <li>패션의류/잡화</li>
+              </div>
+              <div onClick={category3}>
+                <li>전자제품</li>
+              </div>
+              <div onClick={category4}>
+                <li>스포츠/레저</li>
+              </div>
+              <div onClick={category5}>
+                <li>기타</li>
+              </div>
+            </ul>
+            <Button
+              size="220px"
+              padding="10px"
+              fontSize="var(--font-regular)"
+              marginTop="20px"
+              onClick={() => {
+                if (cookies.userAuth == "undefined" || !cookies.userAuth) {
+                  alert("로그인이 필요한 페이지입니다.");
+                  setTimeout(() => {
+                    navigate("/user/login");
+                  }, 300);
+                } else {
+                  setTimeout(() => {
+                    navigate("/auction/add");
+                  }, 500);
+                }
+              }}
+            >
+              경매 등록
+            </Button>
+          </StAuctionCategory>
+        </StAuctionAside>
+
+        {/* Content */}
+        <StProductsContainer>
+          <div
+            style={{
+              display: "flex",
+              flexDirection: "column",
+              gap: "10px",
+              flexGrow: "2",
+            }}
+          >
+            <StProductSearch>
+              <StSearchInput
+                value={search}
+                onChange={(e) => setSearch(e.target.value)}
+                placeholder="상품을 검색해주세요"
+              />
+              <Button
+                size="var(--size-medium)"
+                borderRadius="none"
+                fontSize="var(--font-regular)"
+                onClick={searchHandler}
+              >
+                검색
+              </Button>
+            </StProductSearch>
+
+            <StProductContainer>
+              {searchResult
+                ? searchResult?.map((item) => {
+                    return (
+                      <StProductBoxAuction
+                        to={`/auction/${item.id}`}
+                        key={item.id}
+                      >
+                        <div style={{ display: "flex", alignSelf: "center" }}>
+                          <StProductImg src="https://hips.hearstapps.com/hmg-prod/images/pringles-template-lightlysalted-1546635619.jpg?crop=1xw:1xh;center,top&resize=980:*" />
                         </div>
                         <div>
-                            {isOpen && (
-                                <div>
-                                    <StDropdownList onClick={MypageAuctionGo}><h2>내경매조회</h2></StDropdownList><br />
-                                    <StDropdownList onClick={MypageBiddingnGo}><h2>내입찰조회</h2></StDropdownList>
-                                </div>
-                            )}
+                          <h4>{item.title}</h4>
+                          <p>현재 가격: {item.currentPrice}</p>
+                          <p>{item.deadline}</p>
                         </div>
-                    </StMyPage>
-                    <StItems>
-                        {products?.map((item) => {
-                            return (
-                                <Link to={`/auction/${item.id}`} key={item.id} style={{ textDecoration: "none", color: "black" }}>
-                                    <StItem key={item.id}>
-                                        <StPicture>사진들어갈자리</StPicture>
-                                        <div>아이템이름:{item.title}</div>
-                                        <div>현재가격:{item.minPrice}</div>
-                                        <div>남은기간:{item.deadline}</div>
-                                    </StItem>
-                                </Link>
-                            )
-                        })}
-                    </StItems>
-                </StFlex>
-<Link to="/auction/Add"><StBackgroundImage/></Link>
-            </StLayout>
-        </div>
-    )
+                      </StProductBoxAuction>
+                    );
+                  })
+                : data?.map((item) => {
+                    return (
+                      <StProductBoxAuction
+                        to={`/auction/${item.id}`}
+                        key={item.id}
+                      >
+                        <div>
+                          <StProductImg src="https://hips.hearstapps.com/hmg-prod/images/pringles-template-lightlysalted-1546635619.jpg?crop=1xw:1xh;center,top&resize=980:*" />
+                        </div>
+                        <div>
+                          <h4>{item.title}</h4>
+                          <p>현재 가격: {item.currentPrice}</p>
+                          <p>{item.deadline}</p>
+                        </div>
+                      </StProductBoxAuction>
+                    );
+                  })}
+            </StProductContainer>
+          </div>
+          <Stack spacing={2} style={{ alignSelf: "center" }}>
+            <Pagination count={5} page={page} onChange={handleChange} />
+          </Stack>
+        </StProductsContainer>
+      </SectionAuction>
+    </Section>
+  );
 }
 
 export default Auction;

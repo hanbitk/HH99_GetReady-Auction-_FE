@@ -1,7 +1,6 @@
 import React from "react";
 import { useNavigate } from "react-router-dom/dist";
 import Button from "../components/Buttons/Button";
-import Section from "../components/Section/Section";
 import {
   SectionMyPage,
   StMyPageButtons,
@@ -10,22 +9,23 @@ import {
   StMyProductImg,
 } from "../styles/MyPage.styles";
 import { useSelector } from "react-redux";
+import Section from "../components/Section/Section";
+import { getMyPosts } from "../core/api/posts";
+import { useMutation, useQuery, useQueryClient } from "react-query";
 import { useCookies } from "react-cookie";
-import { getMyBiddings } from "../core/api/posts";
-import { useQuery } from "react-query";
-
-function MyPageBidding() {
+function MyPageAuction() {
   const navigate = useNavigate();
 
+  // const token = useToken();
   const [cookies] = useCookies("userAuth");
   const token = cookies.userAuth;
 
-  // const products = useSelector((state) => state.products.products);
-
   const { isLoading, isError, data } = useQuery("posts", async () => {
-    const products = await getMyBiddings(token);
+    const products = await getMyPosts(token);
     return products.data;
   });
+
+  console.log(data);
 
   if (isLoading) {
     return <div>Loading...</div>;
@@ -34,6 +34,8 @@ function MyPageBidding() {
   if (isError) {
     return <div>Error occurred.</div>;
   }
+
+  console.log(data);
 
   return (
     <Section>
@@ -89,4 +91,4 @@ function MyPageBidding() {
   );
 }
 
-export default MyPageBidding;
+export default MyPageAuction;

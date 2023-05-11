@@ -67,19 +67,13 @@ function Signup() {
       );
       return;
     } else {
-      console.log("username", username);
       mutation.mutate({
         username,
         password,
       });
     }
-
-    console.log("username", username);
-    console.log("password", password);
-
-    // setTimeout(() => {
-    //   navigate("/auction");
-    // }, 1000);
+    alert("회원가입 완료");
+    return navigate("/user/login");
   };
 
   return (

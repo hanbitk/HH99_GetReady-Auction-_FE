@@ -1,13 +1,14 @@
 import axios from "axios";
 import instance, { baseURL } from "../axios/instance";
 
-
 const login = async (users) => {
   try {
     const response = await instance.post(`/user/login`, users);
     const accessToken = response.headers.get("authorization");
     const token = accessToken.split(" ")[1];
-    return token;
+    const loginSuccess = response.data.message;
+    alert(response.data.message)
+    return { token, loginSuccess };
   } catch (error) {
     console.error(error);
     throw error;
