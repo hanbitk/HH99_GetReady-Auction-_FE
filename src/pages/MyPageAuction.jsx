@@ -17,7 +17,7 @@ function MyPageAuction() {
   const navigate = useNavigate();
 
   // const token = useToken();
-  const [cookies, setCookie, removeCookie] = useCookies("userAuth");
+  const [cookies] = useCookies("userAuth");
   const token = cookies.userAuth;
 
   const { isLoading, isError, data } = useQuery("posts", async () => {

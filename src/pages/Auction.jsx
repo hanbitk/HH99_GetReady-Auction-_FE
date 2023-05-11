@@ -1,10 +1,9 @@
 import React from "react";
-import { useNavigate, Link } from "react-router-dom/dist";
+import { useNavigate } from "react-router-dom/dist";
 import Button from "../components/Buttons/Button";
-import { useState, useEffect } from "react";
-import { useMutation, useQuery, useQueryClient } from "react-query";
-import { getPosts, biddingPost } from "../core/api/posts";
-import Typography from "@mui/material/Typography";
+import { useState } from "react";
+import { useQuery } from "react-query";
+import { getPosts } from "../core/api/posts";
 import Pagination from "@mui/material/Pagination";
 import Stack from "@mui/material/Stack";
 import instance from "../axios/api";
@@ -19,24 +18,18 @@ import {
   StProductBoxAuction,
   StProductImg,
 } from "../styles/Auction.styles";
-import {
-  StFlex,
-  StLayout,
-  StItem,
-  StPicture,
-  StItems,
-  StSearchBar,
-} from "../styles/MyPage.styles";
 import { useCookies } from "react-cookie";
 import { SectionAuction } from "../styles/Auction.styles";
 function Auction() {
   const [cookies] = useCookies();
-  const [page, setPage] = React.useState(1);
+  const [page, setPage] = React.useState(0);
   const [search, setSearch] = useState("");
   const [searchResult, setSearchResult] = useState(null);
   const navigate = useNavigate();
 
-  const { isLoading, isError, data } = useQuery("posts", getPosts);
+  const { isLoading, isError, data } = useQuery("posts", async () =>
+    getPosts(page)
+  );
 
   console.log(data);
 
@@ -57,7 +50,7 @@ function Auction() {
     try {
       const response = await instance.get("/auction/search", {
         params: {
-          page: 0,
+          page: page,
           size: 6,
           search: search,
         },
@@ -69,82 +62,8 @@ function Auction() {
   };
 
   return (
-    //   <div>
-    //     <StLayout>
-    //       <StFlex>
-    //         <StSearchBar>
-    //           검색--
-    //           <input
-    //             value={search}
-    //             onChange={(e) => setSearch(e.target.value)}
-    //             placeholder="검색영역"
-    //           />
-    //           <button onClick={searchHandler}>버튼</button>
-    //         </StSearchBar>
-
-    //         <StItems>
-    //           {searchResult
-    //             ? searchResult?.map((item) => {
-    //                 return (
-    //                   <Link
-    //                     to={`/auction/${item.id}`}
-    //                     key={item.id}
-    //                     style={{ textDecoration: "none", color: "black" }}
-    //                   >
-    //                     <StItem key={item.id}>
-    //                       <StPicture>사진들어갈자리</StPicture>
-    //                       <div>아이템이름:{item.title}</div>
-    //                       <div>현재가격:{item.currentPrice}</div>
-    //                       <div>남은기간:{item.deadline}</div>
-    //                     </StItem>
-    //                   </Link>
-    //                 );
-    //               })
-    //             : data?.map((item) => {
-    //                 return (
-    //                   <Link
-    //                     to={`/auction/${item.id}`}
-    //                     key={item.id}
-    //                     style={{ textDecoration: "none", color: "black" }}
-    //                   >
-    //                     <StItem key={item.id}>
-    //                       <StPicture>사진들어갈자리</StPicture>
-    //                       <div>아이템이름:{item.title}</div>
-    //                       <div>현재가격:{item.currentPrice}</div>
-    //                       <div>남은기간:{item.deadline}</div>
-    //                     </StItem>
-    //                   </Link>
-    //                 );
-    //               })}
-    //         </StItems>
-    //         {/* <Pagination count={11} defaultPage={6} siblingCount={0} /> */}
-    //       </StFlex>
-    //       <Button
-    //         onClick={() => {
-    //           if (cookies.userAuth == "undefined" || !cookies.userAuth) {
-    //             alert("로그인이 필요한 페이지입니다.");
-    //             setTimeout(() => {
-    //               navigate("/user/login");
-    //             }, 1000);
-    //           } else {
-    //             setTimeout(() => {
-    //               navigate("/auction/add");
-    //             }, 500);
-    //           }
-    //         }}
-    //       >
-    //         경매 등록
-    //       </Button>
-    //     </StLayout>
-
-    //     <Stack spacing={2}>
-    //       <Typography>Page: {page}</Typography>
-    //       <Pagination count={10} page={page} onChange={handleChange} />
-    //     </Stack>
-    //   </div>
-    // );
-
     <Section>
+      {/* {page} */}
       <SectionAuction>
         {/* Aside */}
         <StAuctionAside>
@@ -161,13 +80,13 @@ function Auction() {
               size="220px"
               padding="10px"
               fontSize="var(--font-regular)"
-              marginTop='20px'
+              marginTop="20px"
               onClick={() => {
                 if (cookies.userAuth == "undefined" || !cookies.userAuth) {
                   alert("로그인이 필요한 페이지입니다.");
                   setTimeout(() => {
                     navigate("/user/login");
-                  }, 1000);
+                  }, 300);
                 } else {
                   setTimeout(() => {
                     navigate("/auction/add");
@@ -225,8 +144,7 @@ function Auction() {
                       </StProductBoxAuction>
                     );
                   })
-                : !isLoading &&
-                  data?.map((item) => {
+                : data?.map((item) => {
                     return (
                       <StProductBoxAuction
                         to={`/auction/${item.id}`}
@@ -246,7 +164,7 @@ function Auction() {
             </StProductContainer>
           </div>
           <Stack spacing={2} style={{ alignSelf: "center" }}>
-            <Pagination count={10} page={page} onChange={handleChange} />
+            <Pagination count={5} page={page} onChange={handleChange} />
           </Stack>
         </StProductsContainer>
       </SectionAuction>

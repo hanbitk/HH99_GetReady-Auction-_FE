@@ -23,9 +23,10 @@ import {
 } from "../styles/Section.styles";
 import { useNavigate } from "react-router-dom";
 import { useCookies } from "react-cookie";
-import { getHotPosts } from "../core/api/posts";
 import { useQuery } from "react-query";
 import { useSelector } from "react-redux";
+import instance from "../axios/api";
+import { getHotPosts } from "../core/api/posts";
 
 function Home() {
   const [cookies] = useCookies("userAuth");
@@ -34,20 +35,15 @@ function Home() {
 
   const products = useSelector((state) => state.products.products);
 
-  // const { isLoading, isError, data } = useQuery("posts", async () => {
-  //   const products = await getHotPosts();
-  //   return products.data;
-  // });
+  const { isLoading, isError, data } = useQuery("posts", getHotPosts)
 
-  // console.log(data)
+  if (isLoading) {
+    return <div>Loading...</div>;
+  }
 
-  // if (isLoading) {
-  //   return <div>Loading...</div>;
-  // }
-
-  // if (isError) {
-  //   return <div>Error occurred.</div>;
-  // }
+  if (isError) {
+    return <div>Error occurred.</div>;
+  }
 
   return (
     <>
@@ -79,11 +75,11 @@ function Home() {
                 height="40px"
                 onClick={() => {
                   if (cookies.userAuth == "undefined" || !cookies.userAuth) {
-                    alert('경매장에 오신걸 환영합니다!')
+                    alert("경매장에 오신걸 환영합니다!");
                     setTimeout(() => {
                       navigate("/user/signup");
                     }, 600);
-                  }else{
+                  } else {
                     setTimeout(() => {
                       navigate("/auction");
                     }, 600);
@@ -228,7 +224,7 @@ function Home() {
             </StDescription>
           </StHotListDescription>
           <StHotListBox>
-            {products?.map((product) => {
+            {data?.map((product) => {
               return (
                 <ProductsBox
                   key={product.id}

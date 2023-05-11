@@ -2,6 +2,7 @@ import styled from "styled-components";
 
 // Section Component
 export const StSectionContainer = styled.div`
+  border: 1px solid green;
   background-color: ${(props) => props.backgroundColor || "#cad5e3"};
 `;
 
@@ -60,7 +61,7 @@ export const ContentImagebox = styled.div`
 
 // Section About
 
-export const SectionAbout = styled.div` 
+export const SectionAbout = styled.div`
   display: flex;
   flex-direction: row;
   justify-content: space-around;
@@ -136,14 +137,14 @@ export const Deadline = styled.p`
   background-color: var(--color-red);
   top: 5%;
   left: 75%;
-`
+`;
 
 export const ProductsBox = styled.div`
   cursor: pointer;
-  &:hover{
+  &:hover {
     transform: translateY(3px);
-    transition: .5s;
-    }
-`
+    transition: 0.5s;
+  }
+`;
 
 // ======================== //

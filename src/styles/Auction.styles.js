@@ -24,12 +24,18 @@ export const StAuctionCategory = styled.div`
     flex-direction: column;
     height: 50%;
     justify-content: space-between;
+    cursor: pointer;
 
     li {
       background-color: var(--color-light-white);
       padding: 10px;
       padding-left: 10px;
       border-radius: 4px;
+
+      &:hover{
+        background-color: var(--color-primary);
+        color: var(--color-light-white);
+      }
     }
   }
 `;

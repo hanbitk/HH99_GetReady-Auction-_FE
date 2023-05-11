@@ -15,10 +15,22 @@ import useToken from "../../hooks/useToken";
 // };
 
 // 전체 경매품 조회
-const getPosts = async () => {
+const getPosts = async (page) => {
+  console.log(page)
   try {
     const response = await instance.get(
-      `/auction?page=0&size=6&sort=createdAt,desc`
+      `/auction?page=${page}&size=6`,
+    );
+    return response.data.data;
+  } catch (err) {
+    console.log(`데이터 불러오는 중에 오류 발생: ${err}`);
+  }
+};
+
+const getHotPosts = async () => {
+  try {
+    const response = await instance.get(
+      `/main?page=0&size=4`,
     );
     return response.data.data;
   } catch (err) {
@@ -30,7 +42,7 @@ const getPosts = async () => {
 const getMyPosts = async (token) => {
   try {
     const response = await instance.get(
-      `/mypage/auction?page=0&size=5&sort=createdAt,desc`,
+      `/mypage/auction?page=0&size=6`,
       {
         headers: {
           Authorization: `Bearer ${token}`,
@@ -43,7 +55,23 @@ const getMyPosts = async (token) => {
   }
 };
 
-//getHotPosts
+// 내 입찰 조회
+const getMyBiddings = async (token) => {
+  try {
+    const response = await instance.get(
+      `/mypage/bidding?page=0&size=6`,
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    );
+    return response.data;
+  } catch (err) {
+    console.log(`데이터 불러오는 중에 오류 발생: ${err}`);
+  }
+};
+
 const updatePost = async (payload) => {
   console.log(payload.content);
   try {
@@ -115,6 +143,8 @@ const biddingPost = async (payload) => {
 export {
   getPosts,
   getMyPosts,
+  getMyBiddings,
+  getHotPosts,
   deletePost,
   updatePost,
   getPostDetail,

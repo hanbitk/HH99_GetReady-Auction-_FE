@@ -39,7 +39,7 @@ function Login() {
   const mutation = useMutation(login, {
     async onSuccess(data) {
       const { token, loginSuccess } = data;
-      const expireTime = new Date(new Date().getTime() + 10 * 60 * 1000);
+      const expireTime = new Date(new Date().getTime() + 30 * 60 * 1000);
       console.log(loginSuccess);
       setCookie("userAuth", token, { path: "/", expires: expireTime });
       setTimeout(() => {

@@ -11,11 +11,29 @@ import {
 } from "../styles/MyPage.styles";
 import { useSelector } from "react-redux";
 import { useCookies } from "react-cookie";
+import { getMyBiddings } from "../core/api/posts";
+import { useQuery } from "react-query";
 
 function MyPageBidding() {
   const navigate = useNavigate();
-  const [cookies] = useCookies();
-  const products = useSelector((state) => state.products.products);
+
+  const [cookies] = useCookies("userAuth");
+  const token = cookies.userAuth;
+
+  // const products = useSelector((state) => state.products.products);
+
+  const { isLoading, isError, data } = useQuery("posts", async () => {
+    const products = await getMyBiddings(token);
+    return products.data;
+  });
+
+  if (isLoading) {
+    return <div>Loading...</div>;
+  }
+
+  if (isError) {
+    return <div>Error occurred.</div>;
+  }
 
   return (
     <Section>
@@ -51,7 +69,7 @@ function MyPageBidding() {
             </Button>
           </StMyPageButtons>
           <StMyPageArticle>
-            {products.map((product) => {
+            {data?.map((product) => {
               return (
                 <ProductsBox
                   key={product.id}
